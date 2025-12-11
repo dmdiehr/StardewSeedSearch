@@ -1,0 +1,12 @@
+/Users/david/code/StardewSeedSearch/StardewSeedSearch.Core/bin/Debug/net10.0/StardewSeedSearch.Core.deps.json
+/Users/david/code/StardewSeedSearch/StardewSeedSearch.Core/bin/Debug/net10.0/StardewSeedSearch.Core.dll
+/Users/david/code/StardewSeedSearch/StardewSeedSearch.Core/bin/Debug/net10.0/StardewSeedSearch.Core.pdb
+/Users/david/code/StardewSeedSearch/StardewSeedSearch.Core/obj/Debug/net10.0/StardewSeedSearch.Core.GeneratedMSBuildEditorConfig.editorconfig
+/Users/david/code/StardewSeedSearch/StardewSeedSearch.Core/obj/Debug/net10.0/StardewSeedSearch.Core.AssemblyInfoInputs.cache
+/Users/david/code/StardewSeedSearch/StardewSeedSearch.Core/obj/Debug/net10.0/StardewSeedSearch.Core.AssemblyInfo.cs
+/Users/david/code/StardewSeedSearch/StardewSeedSearch.Core/obj/Debug/net10.0/StardewSeedSearch.Core.csproj.CoreCompileInputs.cache
+/Users/david/code/StardewSeedSearch/StardewSeedSearch.Core/obj/Debug/net10.0/StardewSeedSearch.Core.dll
+/Users/david/code/StardewSeedSearch/StardewSeedSearch.Core/obj/Debug/net10.0/refint/StardewSeedSearch.Core.dll
+/Users/david/code/StardewSeedSearch/StardewSeedSearch.Core/obj/Debug/net10.0/StardewSeedSearch.Core.pdb
+/Users/david/code/StardewSeedSearch/StardewSeedSearch.Core/obj/Debug/net10.0/ref/StardewSeedSearch.Core.dll
+/Users/david/code/StardewSeedSearch/StardewSeedSearch.Core/obj/Debug/net10.0/StardewSeedSearch.Core.csproj.AssemblyReference.cache

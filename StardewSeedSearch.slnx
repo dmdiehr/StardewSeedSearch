@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="StardewSeedSearch.Core/StardewSeedSearch.Core.csproj" />
+  <Project Path="StardewSeedSearch.Tests/StardewSeedSearch.Tests.csproj" />
+</Solution>
