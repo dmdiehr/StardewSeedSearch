@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using StardewSeedSearch.Core.Helpers;
 
 namespace StardewSeedSearch.Core;
 
