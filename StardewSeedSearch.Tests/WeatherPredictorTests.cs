@@ -1,5 +1,4 @@
 using StardewSeedSearch.Core;
-using StardewSeedSearch.Core.Helpers;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -22,7 +21,7 @@ public class WeatherPredictorTests
 
         var weather = WeatherPredictor.GetWeatherForDate(year, Season.Spring, 3, gameId);
 
-        Assert.Equal(WeatherType.Rain, weather);
+        Assert.Equal(Weather.Rain, weather);
     }
 
     [Fact]
@@ -34,7 +33,7 @@ public class WeatherPredictorTests
         int greenDay = GreenRainPredictor.PredictGreenRainDay(year, gameId);
         var weather = WeatherPredictor.GetWeatherForDate(year, Season.Summer, greenDay, gameId);
 
-        Assert.Equal(WeatherType.GreenRain, weather);
+        Assert.Equal(Weather.GreenRain, weather);
 
         output.WriteLine($"Green Rain (Y{year}) for game {gameId} is on summer {greenDay}");
     }
@@ -52,10 +51,10 @@ public class WeatherPredictorTests
         var fallFirstWeather = WeatherPredictor.GetWeatherForDate(year, Season.Fall, 1, gameId);
         var winterFirstWeather = WeatherPredictor.GetWeatherForDate(year, Season.Winter, 1, gameId);
 
-        Assert.Equal(WeatherType.Sun, springFirstWeather);
-        Assert.Equal(WeatherType.Sun, summerFirstWeather);
-        Assert.Equal(WeatherType.Sun, fallFirstWeather);
-        Assert.Equal(WeatherType.Sun, winterFirstWeather);
+        Assert.Equal(Weather.Sun, springFirstWeather);
+        Assert.Equal(Weather.Sun, summerFirstWeather);
+        Assert.Equal(Weather.Sun, fallFirstWeather);
+        Assert.Equal(Weather.Sun, winterFirstWeather);
 
     }
 
@@ -64,9 +63,9 @@ public class WeatherPredictorTests
     {
 
         
-        ulong gameId = 1234567;
-        int year = 2;
-        Season season = Season.Fall;   // ← change this to Summer/Fall/Winter
+        ulong gameId = 999995;
+        int year = 1;
+        Season season = Season.Summer;   // ← change this to Summer/Fall/Winter
         
         output.WriteLine($"Weather for Year {year}, {season}:");
 
@@ -79,8 +78,8 @@ public class WeatherPredictorTests
         // var rainDay = WeatherPredictor.GetWeatherForDate(1, Season.Spring, 6, gameId);
         // var sunDay = WeatherPredictor.GetWeatherForDate(1, Season.Spring, 7, gameId);
 
-        // Assert.Equal(WeatherType.Sun, sunDay);
-        // Assert.Equal(WeatherType.Rain, rainDay);
+        // Assert.Equal(Weather.Sun, sunDay);
+        // Assert.Equal(Weather.Rain, rainDay);
 
 
     }

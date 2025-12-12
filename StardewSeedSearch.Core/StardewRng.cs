@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace StardewSeedSearch.Core.Helpers;
+namespace StardewSeedSearch.Core;
 
 public static class StardewRng
 {

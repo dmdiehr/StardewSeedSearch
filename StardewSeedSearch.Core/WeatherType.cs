@@ -1,5 +1,5 @@
-namespace StardewSeedSearch.Core.Helpers;
-public enum WeatherType
+namespace StardewSeedSearch.Core;
+public enum Weather
 {
     Unknown,
     Sun,

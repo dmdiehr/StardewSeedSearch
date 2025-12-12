@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.IO.Hashing;
 
-namespace StardewSeedSearch.Core.Helpers;
+namespace StardewSeedSearch.Core;
 
 public static class HashUtility
 {

@@ -1,4 +1,4 @@
-namespace StardewSeedSearch.Core.Helpers;
+namespace StardewSeedSearch.Core;
 
 public static class Helper
 {

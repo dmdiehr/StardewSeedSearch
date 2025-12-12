@@ -1,13 +1,12 @@
-using StardewSeedSearch.Core.Helpers;
 namespace StardewSeedSearch.Core;
 
 public static class WeatherPredictor
 {
-    public static WeatherType GetWeatherForDate(int year, Season season, int dayOfMonth, ulong gameId)
+    public static Weather GetWeatherForDate(int year, Season season, int dayOfMonth, ulong gameId)
     {
         // 1. Forced weather from vanilla rules
         var forced = GetForcedWeather(year, season, dayOfMonth);
-        if (forced != WeatherType.Unknown)
+        if (forced != Weather.Unknown)
             return forced;
 
         // 2. Green Rain (summer only; we already know its logic)
@@ -15,14 +14,14 @@ public static class WeatherPredictor
         {
             int greenDay = GreenRainPredictor.PredictGreenRainDay(year, gameId);
             if (dayOfMonth == greenDay)
-                return WeatherType.GreenRain;
+                return Weather.GreenRain;
         }
 
         // 3) normal generated weather
         return GetGeneratedWeather(year, season, dayOfMonth, gameId);
     }
 
-    private static WeatherType GetForcedWeather(int year, Season season, int dayOfMonth)
+    private static Weather GetForcedWeather(int year, Season season, int dayOfMonth)
     {
         // From the official 1.6 weather docs:
         // spring 1               -> Sun
@@ -40,37 +39,37 @@ public static class WeatherPredictor
         if (season == Season.Spring)
         {
             if (dayOfMonth == 1)
-                return WeatherType.Sun;
+                return Weather.Sun;
 
             if (year == 1)
             {
                 if (dayOfMonth == 2 || dayOfMonth == 4)
-                    return WeatherType.Sun;
+                    return Weather.Sun;
                 if (dayOfMonth == 3)
-                    return WeatherType.Rain;
+                    return Weather.Rain;
             }
         }
         else if (season == Season.Summer)
         {
             if (dayOfMonth == 1)
-                return WeatherType.Sun;
+                return Weather.Sun;
             if (dayOfMonth == 13 || dayOfMonth == 26)
-                return WeatherType.Storm;
+                return Weather.Storm;
         }
         else if (season == Season.Fall)
         {
             if (dayOfMonth == 1)
-                return WeatherType.Sun;
+                return Weather.Sun;
         }
         else if (season == Season.Winter)
         {
             if (dayOfMonth == 1)
-                return WeatherType.Sun;
+                return Weather.Sun;
             
             // Night Market (passive festival) on Winter 15–17:
             // weather in the Default context (valley) is always sunny on those days.
             if (dayOfMonth is >= 15 and <= 17)
-                return WeatherType.Sun;
+                return Weather.Sun;
         }
 
          // ---- Festival overrides ----
@@ -78,30 +77,30 @@ public static class WeatherPredictor
         {
             case Season.Spring:
                 if (dayOfMonth == 13 || dayOfMonth == 24)
-                    return WeatherType.Festival;
+                    return Weather.Festival;
                 break;
 
             case Season.Summer:
                 if (dayOfMonth == 11 || dayOfMonth == 28)
-                    return WeatherType.Festival;
+                    return Weather.Festival;
                 break;
 
             case Season.Fall:
                 if (dayOfMonth == 16 || dayOfMonth == 27)
-                    return WeatherType.Festival;
+                    return Weather.Festival;
                 break;
 
             case Season.Winter:
                 if (dayOfMonth == 8 || dayOfMonth == 25)
-                    return WeatherType.Festival;
+                    return Weather.Festival;
                 break;
         }
 
         //Return unknown when its not a force weather date
-        return WeatherType.Unknown;
+        return Weather.Unknown;
     }
 
-    private static WeatherType GetGeneratedWeather(int year, Season season, int dayOfMonth, ulong gameId)
+    private static Weather GetGeneratedWeather(int year, Season season, int dayOfMonth, ulong gameId)
     {
         long daysPlayed = Helper.GetDaysPlayed(year, season, dayOfMonth);
         Random ctxRandom = CreateWeatherContextRandom(daysPlayed, gameId);
@@ -110,11 +109,11 @@ public static class WeatherPredictor
         if (season == Season.Summer && RollSyncedSummerRainRandom(year, dayOfMonth, gameId))
         {
             if (RollRandom(ctxRandom, 0.85))
-                return WeatherType.Storm;
+                return Weather.Storm;
 
             // --- SummerStorm2 (SEASON summer, SYNCED_SUMMER_RAIN_RANDOM, RANDOM .25, DAYS_PLAYED 28, !DAY_OF_MONTH 1, !DAY_OF_MONTH 2) ---
             if (daysPlayed >= 28 && dayOfMonth != 1 && dayOfMonth != 2 && RollRandom(ctxRandom, 0.25))
-                return WeatherType.Storm;
+                return Weather.Storm;
         }
 
         // --- FallStorm (SEASON spring fall, SYNCED_RANDOM day location_weather .183, RANDOM .25, DAYS_PLAYED 28, !DAY_OF_MONTH 1, !DAY_OF_MONTH 2) ---
@@ -122,37 +121,37 @@ public static class WeatherPredictor
             RollSyncedRandomDay(year, season, dayOfMonth, gameId, key: "location_weather", chance: 0.183))
         {
             if (daysPlayed >= 28 && dayOfMonth != 1 && dayOfMonth != 2 && RollRandom(ctxRandom, 0.25))
-                return WeatherType.Storm;
+                return Weather.Storm;
         }
 
         // --- WinterSnow (SEASON winter, SYNCED_RANDOM day location_weather 0.63) ---
         if (season == Season.Winter &&
             RollSyncedRandomDay(year, season, dayOfMonth, gameId, key: "location_weather", chance: 0.63))
         {
-            return WeatherType.Snow;
+            return Weather.Snow;
         }
 
         // --- SummerRain (SEASON summer, SYNCED_SUMMER_RAIN_RANDOM, !DAY_OF_MONTH 1) ---
         if (season == Season.Summer && dayOfMonth != 1 && RollSyncedSummerRainRandom(year, dayOfMonth, gameId))
-            return WeatherType.Rain;
+            return Weather.Rain;
 
         // --- FallRain (SEASON spring fall, SYNCED_RANDOM day location_weather 0.183) ---
         if ((season == Season.Spring || season == Season.Fall) &&
             RollSyncedRandomDay(year, season, dayOfMonth, gameId, key: "location_weather", chance: 0.183))
         {
-            return WeatherType.Rain;
+            return Weather.Rain;
         }
 
         // --- SpringWind (DAYS_PLAYED 3, SEASON spring, RANDOM .20) ---
         if (season == Season.Spring && daysPlayed >= 3 && RollRandom(ctxRandom, 0.20))
-            return WeatherType.Wind;
+            return Weather.Wind;
 
         // --- FallWind (DAYS_PLAYED 3, SEASON fall, RANDOM .6) ---
         if (season == Season.Fall && daysPlayed >= 3 && RollRandom(ctxRandom, 0.60))
-            return WeatherType.Wind;
+            return Weather.Wind;
 
         // --- Default (Sun) ---
-        return WeatherType.Sun;
+        return Weather.Sun;
     }   
     
 
