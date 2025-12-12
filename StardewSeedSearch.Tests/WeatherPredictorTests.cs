@@ -1,4 +1,5 @@
 using StardewSeedSearch.Core;
+using StardewSeedSearch.Core.Helpers;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -63,9 +64,9 @@ public class WeatherPredictorTests
     {
 
         
-        ulong gameId = 123456;
-        int year = 1;
-        Season season = Season.Spring;   // ← change this to Summer/Fall/Winter
+        ulong gameId = 1234567;
+        int year = 2;
+        Season season = Season.Fall;   // ← change this to Summer/Fall/Winter
         
         output.WriteLine($"Weather for Year {year}, {season}:");
 

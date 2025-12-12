@@ -1,16 +1,5 @@
+using StardewSeedSearch.Core.Helpers;
 namespace StardewSeedSearch.Core;
-
-public enum WeatherType
-{
-    Unknown,
-    Sun,
-    Rain,
-    GreenRain,
-    Festival,
-    Storm,
-    Wind,
-    Snow
-}
 
 public static class WeatherPredictor
 {
@@ -31,23 +20,6 @@ public static class WeatherPredictor
 
         // 3) normal generated weather
         return GetGeneratedWeather(year, season, dayOfMonth, gameId);
-    }
-
-    
-    private static int GetDaysPlayed(int year, Season season, int dayOfMonth)
-    {
-        int seasonIndex = season switch
-        {
-            Season.Spring => 0,
-            Season.Summer => 1,
-            Season.Fall   => 2,
-            Season.Winter => 3,
-            _ => 0
-        };
-
-        // Assumption: DaysPlayed is 1 on Spring 1, Year 1.
-        // Each year has 112 days (4 * 28).
-        return (year - 1) * 112 + seasonIndex * 28 + dayOfMonth;
     }
 
     private static WeatherType GetForcedWeather(int year, Season season, int dayOfMonth)
@@ -131,10 +103,109 @@ public static class WeatherPredictor
 
     private static WeatherType GetGeneratedWeather(int year, Season season, int dayOfMonth, ulong gameId)
     {
-        int daysPlayed = GetDaysPlayed(year, season, dayOfMonth);
-  
-        return WeatherType.Unknown;
+        long daysPlayed = Helper.GetDaysPlayed(year, season, dayOfMonth);
+        Random ctxRandom = CreateWeatherContextRandom(daysPlayed, gameId);
+
+        // --- SummerStorm (SEASON summer, SYNCED_SUMMER_RAIN_RANDOM, RANDOM .85) ---
+        if (season == Season.Summer && RollSyncedSummerRainRandom(year, dayOfMonth, gameId))
+        {
+            if (RollRandom(ctxRandom, 0.85))
+                return WeatherType.Storm;
+
+            // --- SummerStorm2 (SEASON summer, SYNCED_SUMMER_RAIN_RANDOM, RANDOM .25, DAYS_PLAYED 28, !DAY_OF_MONTH 1, !DAY_OF_MONTH 2) ---
+            if (daysPlayed >= 28 && dayOfMonth != 1 && dayOfMonth != 2 && RollRandom(ctxRandom, 0.25))
+                return WeatherType.Storm;
+        }
+
+        // --- FallStorm (SEASON spring fall, SYNCED_RANDOM day location_weather .183, RANDOM .25, DAYS_PLAYED 28, !DAY_OF_MONTH 1, !DAY_OF_MONTH 2) ---
+        if ((season == Season.Spring || season == Season.Fall) &&
+            RollSyncedRandomDay(year, season, dayOfMonth, gameId, key: "location_weather", chance: 0.183))
+        {
+            if (daysPlayed >= 28 && dayOfMonth != 1 && dayOfMonth != 2 && RollRandom(ctxRandom, 0.25))
+                return WeatherType.Storm;
+        }
+
+        // --- WinterSnow (SEASON winter, SYNCED_RANDOM day location_weather 0.63) ---
+        if (season == Season.Winter &&
+            RollSyncedRandomDay(year, season, dayOfMonth, gameId, key: "location_weather", chance: 0.63))
+        {
+            return WeatherType.Snow;
+        }
+
+        // --- SummerRain (SEASON summer, SYNCED_SUMMER_RAIN_RANDOM, !DAY_OF_MONTH 1) ---
+        if (season == Season.Summer && dayOfMonth != 1 && RollSyncedSummerRainRandom(year, dayOfMonth, gameId))
+            return WeatherType.Rain;
+
+        // --- FallRain (SEASON spring fall, SYNCED_RANDOM day location_weather 0.183) ---
+        if ((season == Season.Spring || season == Season.Fall) &&
+            RollSyncedRandomDay(year, season, dayOfMonth, gameId, key: "location_weather", chance: 0.183))
+        {
+            return WeatherType.Rain;
+        }
+
+        // --- SpringWind (DAYS_PLAYED 3, SEASON spring, RANDOM .20) ---
+        if (season == Season.Spring && daysPlayed >= 3 && RollRandom(ctxRandom, 0.20))
+            return WeatherType.Wind;
+
+        // --- FallWind (DAYS_PLAYED 3, SEASON fall, RANDOM .6) ---
+        if (season == Season.Fall && daysPlayed >= 3 && RollRandom(ctxRandom, 0.60))
+            return WeatherType.Wind;
+
+        // --- Default (Sun) ---
+        return WeatherType.Sun;
+    }   
+    
+
+
+    private static bool RollSyncedRandomDay(int year, Season season, int dayOfMonth, ulong gameId, string key, double chance)
+    {
+        // Mirrors: SYNCED_RANDOM day <key> <chance>  => random.NextDouble() < chance
+        if (!Helper.TryCreateIntervalRandomForDate(
+                interval: "day",
+                key: key,
+                gameId: gameId,
+                year: year,
+                season: season,
+                dayOfMonth: dayOfMonth,
+                out Random rng,
+                out string? error))
+        {
+            throw new InvalidOperationException($"TryCreateIntervalRandomForDate failed: {error}");
+        }
+
+        return rng.NextDouble() < chance;
     }
+
+    private static bool RollSyncedSummerRainRandom(int year, int dayOfMonth, ulong gameId)
+    {
+        // Decompiled 1.6.1+ SYNCED_SUMMER_RAIN_RANDOM:
+        // random = Utility.CreateDaySaveRandom(hash("summer_rain_chance"));
+        // chance = 0.12 + dayOfMonth * 0.003;
+        // return random.NextBool(chance);
+
+        long daysPlayed = Helper.GetDaysPlayed(year, Season.Summer, dayOfMonth);
+        int seedA = HashUtility.GetDeterministicHashCode("summer_rain_chance");
+
+        Random rng = StardewRng.CreateDaySaveRandom(daysPlayed, gameId, seedA);
+
+        double chance = 0.12 + (dayOfMonth * 0.003);
+        return rng.NextDouble() < chance;
+    }
+
+    private static bool RollRandom(Random rng, double chance)
+    {
+        // Mirrors Helpers.RandomImpl(random, ..., chance) with no @addDailyLuck
+        return rng.NextDouble() < chance;
+    }
+
+    private static Random CreateWeatherContextRandom(long daysPlayed, ulong gameId)
+    {
+        // ASSUMPTION TO VERIFY:
+        // GameStateQuery RANDOM uses the context random which (for weather) matches the day RNG.
+        // If this is wrong, this is the only method you need to change.
+        return StardewRng.CreateDaySaveRandom(daysPlayed, gameId);
+    }
+
 
 }
 
