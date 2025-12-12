@@ -5,3 +5,5 @@ obj/
 *.suo
 *.cache
 *.DS_Store
+StardewSeedSearch.Core/bin/Debug/net10.0/StardewSeedSearch.Core.dll
+StardewSeedSearch.Core/bin/Debug/net10.0/StardewSeedSearch.Core.pdb
