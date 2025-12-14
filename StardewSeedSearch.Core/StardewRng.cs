@@ -84,4 +84,10 @@ public static class StardewRng
             array[i] = temp;
         }
     }
+        public static T? ChooseFrom<T>(this Random rng, IList<T> list)
+    {
+        if (list is null) throw new ArgumentNullException(nameof(list));
+        if (list.Count == 0) return default;
+        return list[rng.Next(list.Count)];
+    }
 }
