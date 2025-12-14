@@ -59,28 +59,17 @@ public class WeatherPredictorTests
     }
 
     [Fact]
-    public void WeatherCorrectForKnownGame()
+    public void ResultsMatchKnownYear()
     {
+        ulong gameId = 1234567;
+        var knownYear = new List<Weather>(
+            [Weather.Sun, Weather.Sun, Weather.Rain, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Festival, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Rain, Weather.Sun, Weather.Rain, Weather.Sun, Weather.Rain, Weather.Sun, Weather.Festival, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Sun, Weather.GreenRain, Weather.Sun, Weather.Rain, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Festival, Weather.Sun, Weather.Storm, Weather.Sun, Weather.Rain, Weather.Rain, Weather.Sun, Weather.Rain, Weather.Sun, Weather.Sun, Weather.Rain, Weather.Rain, Weather.Rain, Weather.Sun, Weather.Sun, Weather.Storm, Weather.Sun, Weather.Festival, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Rain, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Festival, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Rain, Weather.Sun, Weather.Festival, Weather.Sun, Weather.Sun, Weather.Snow, Weather.Snow, Weather.Snow, Weather.Sun, Weather.Snow, Weather.Snow, Weather.Festival, Weather.Snow, Weather.Snow, Weather.Sun, Weather.Sun, Weather.Snow, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Sun, Weather.Snow, Weather.Snow, Weather.Snow, Weather.Snow, Weather.Snow, Weather.Sun, Weather.Snow, Weather.Festival, Weather.Snow, Weather.Sun, Weather.Snow]);
 
-        
-        ulong gameId = 999995;
-        int year = 1;
-        Season season = Season.Summer;   // ← change this to Summer/Fall/Winter
-        
-        output.WriteLine($"Weather for Year {year}, {season}:");
+    
+        var testYear = WeatherPredictor.GetWeatherForYear(1, gameId);
 
-        for (int day = 1; day <= 28; day++)
-        {
-            var weather = WeatherPredictor.GetWeatherForDate(year, season, day, gameId);
-            output.WriteLine($"{season} {day}: {weather}");
-        }
-
-        // var rainDay = WeatherPredictor.GetWeatherForDate(1, Season.Spring, 6, gameId);
-        // var sunDay = WeatherPredictor.GetWeatherForDate(1, Season.Spring, 7, gameId);
-
-        // Assert.Equal(Weather.Sun, sunDay);
-        // Assert.Equal(Weather.Rain, rainDay);
-
-
+        Assert.Equivalent(knownYear, testYear);
     }
+
+
 }

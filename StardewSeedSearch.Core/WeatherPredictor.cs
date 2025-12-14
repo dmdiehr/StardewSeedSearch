@@ -37,7 +37,33 @@ public static class WeatherPredictor
         return GetGeneratedWeather(year, season, dayOfMonth, gameId);
     }
 
-    
+    public static IReadOnlyList<Weather> GetWeatherForSeason(int year, Season season, ulong gameId)
+{
+    var result = new Weather[28];
+    for (int day = 1; day <= 28; day++)
+    {
+        result[day - 1] = GetWeatherForDate(year, season, day, gameId);
+    }
+    return result;
+}
+
+public static IReadOnlyList<Weather> GetWeatherForYear(int year, ulong gameId)
+{
+    var result = new Weather[112];
+    int i = 0;
+
+    foreach (Season season in new[] { Season.Spring, Season.Summer, Season.Fall, Season.Winter })
+    {
+        for (int day = 1; day <= 28; day++)
+        {
+            result[i++] = GetWeatherForDate(year, season, day, gameId);
+        }
+    }
+
+    return result;
+}
+
+
 
 private static Weather GetGeneratedWeather(int year, Season season, int dayOfMonth, ulong gameId)
 {
