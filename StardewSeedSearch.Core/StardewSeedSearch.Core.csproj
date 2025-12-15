@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="System.IO.Hashing" Version="8.0.0" />
     <EmbeddedResource Include="Data/RandomBundles.json" />
+    <EmbeddedResource Include="Data/SpecialOrders.json" />
   </ItemGroup>
 
 
