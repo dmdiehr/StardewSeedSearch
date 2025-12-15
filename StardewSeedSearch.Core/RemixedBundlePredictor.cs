@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Text.Json;
+using System.Text;
+
 
 namespace StardewSeedSearch.Core;
 
@@ -13,14 +14,14 @@ public static class RemixedBundlePredictor
     private static readonly Lazy<IReadOnlyList<RandomBundleData>> s_randomBundles =
         new(LoadRandomBundles, isThreadSafe: true);
 
-    public static IReadOnlyDictionary<string, PredictedBundle> Predict(ulong uniqueIdForThisGame)
+    public static IReadOnlyList<PredictedBundle> Predict(ulong uniqueIdForThisGame)
     {
         var randomBundles = s_randomBundles.Value;
 
         // Game1.GenerateBundles: Utility.CreateRandom((double)uniqueIDForThisGame * 9.0)
         Random random = StardewRng.CreateRandom((double)uniqueIdForThisGame * 9.0);
 
-        var result = new Dictionary<string, PredictedBundle>(StringComparer.Ordinal);
+        var all = new List<PredictedBundle>(capacity: 32);
 
         foreach (var area in randomBundles)
         {
@@ -28,8 +29,9 @@ public static class RemixedBundlePredictor
             if (indexLookups.Length == 0)
                 throw new InvalidDataException($"Area '{area.AreaName}' has no Keys.");
 
+            // selected_bundles: slotIndex -> BundleData
             var selected = new Dictionary<int, BundleData>();
-            var insertionOrder = new List<int>(); // match Dictionary enumeration order
+            var insertionOrder = new List<int>(); // matches SDV dict insertion order
 
             // bundle_set = random.ChooseFrom(area_data.BundleSets)
             var bundleSet = StardewRng.ChooseFrom(random, area.BundleSets);
@@ -50,7 +52,7 @@ public static class RemixedBundlePredictor
                 if (selected.ContainsKey(i))
                     continue;
 
-                // index_bundles: Index == i
+                // candidates where Index == i
                 var indexBundles = new List<BundleData>();
                 for (int p = 0; p < pool.Count; p++)
                     if (pool[p].Index == i)
@@ -65,7 +67,7 @@ public static class RemixedBundlePredictor
                     continue;
                 }
 
-                // else: Index == -1 pool
+                // else: candidates where Index == -1
                 indexBundles.Clear();
                 for (int p = 0; p < pool.Count; p++)
                     if (pool[p].Index == -1)
@@ -84,48 +86,153 @@ public static class RemixedBundlePredictor
                 }
             }
 
-            // Now apply item randomization in the SAME order BundleGenerator does:
-            // foreach (int key in selected_bundles.Keys) { ParseItemList(...) }
+            // IMPORTANT: item selection consumes RNG in SDV dict enumeration order,
+            // which matches insertionOrder above.
+            var predictedBySlot = new PredictedBundle[indexLookups.Length];
+
             foreach (int slotIndex in insertionOrder)
             {
                 var data = selected[slotIndex];
-                int bundleKey = indexLookups[slotIndex];
-                string dictKey = $"{area.AreaName}/{bundleKey}";
 
-                var itemTokens = GenerateItemTokensLikeGame(
+                int bundleKey = indexLookups[slotIndex];
+                string bundleId = $"{area.AreaName}/{bundleKey}";
+
+                var itemsChosen = GenerateItemTuplesLikeGame(
                     random,
                     data.Items,
                     data.Pick,
                     data.RequiredItems,
                     out int effectiveRequiredItems);
 
-                result[dictKey] = new PredictedBundle(
+                string rewardRaw = data.Reward ?? "";
+                var rewardParsed = TryParseCountedString(rewardRaw);
+
+                predictedBySlot[slotIndex] = new PredictedBundle(
+                    BundleId: bundleId,
                     AreaName: area.AreaName,
                     SlotIndex: slotIndex,
                     BundleKey: bundleKey,
                     Name: data.Name,
-                    ItemsChosen: itemTokens,
-                    RequiredItems: effectiveRequiredItems);
+                    ItemsChosen: itemsChosen,
+                    RequiredItems: effectiveRequiredItems,
+                    RewardRaw: rewardRaw,
+                    RewardParsed: rewardParsed);
+            }
+
+            // Return in stable slot order (0..N-1)
+            for (int slot = 0; slot < predictedBySlot.Length; slot++)
+            {
+                var b = predictedBySlot[slot];
+                if (b is null)
+                    throw new InvalidDataException($"Area '{area.AreaName}' missing slot {slot}.");
+                all.Add(b);
             }
         }
 
-        return result;
+        return all;
     }
 
-    // --- item generation (matches BundleGenerator.ParseRandomTags + ParseItemList removal behavior) ---
+    // ---- public helpers ----
 
-    private static string[] GenerateItemTokensLikeGame(
+    public static string Signature(IReadOnlyList<PredictedBundle> bundles)
+    {
+        static string QualityLabel(int q) => q switch
+        {
+            1 => "Silver",
+            2 => "Gold",
+            3 => "Iridium",
+            _ => ""
+        };
+
+        static string ItemToText((string Item, int Count, int Quality) it)
+        {
+            var sb = new StringBuilder();
+
+            if (it.Count > 1)
+            {
+                sb.Append(it.Count);
+                sb.Append("x ");
+            }
+
+            if (it.Quality > 0)
+            {
+                sb.Append(QualityLabel(it.Quality));
+                sb.Append(' ');
+            }
+
+            sb.Append(it.Item);
+            return sb.ToString();
+        }
+
+        var sbAll = new StringBuilder();
+
+        foreach (var b in bundles.OrderBy(x => x.BundleId, StringComparer.Ordinal))
+        {
+            // Bundle name
+            sbAll.Append(b.Name);
+
+            // Choose X/Y (only when required less than offered)
+            int offered = b.ItemsChosen.Length;
+            if (b.RequiredItems > 0 && b.RequiredItems < offered)
+            {
+                sbAll.Append("  (Choose ");
+                sbAll.Append(b.RequiredItems);
+                sbAll.Append('/');
+                sbAll.Append(offered);
+                sbAll.Append(')');
+            }
+
+            sbAll.Append('\n');
+
+            // Items (one per line, indented)
+            for (int i = 0; i < b.ItemsChosen.Length; i++)
+            {
+                sbAll.Append("  - ");
+                sbAll.Append(ItemToText(b.ItemsChosen[i]));
+                sbAll.Append('\n');
+            }
+
+            // blank line between bundles (extra \n makes it much easier to scan)
+            sbAll.Append('\n');
+        }
+
+        return sbAll.ToString();
+    }
+
+    
+    public static List<(string Item, int Count, int Quality)> GetAllChosenItems(IReadOnlyList<PredictedBundle> prediction)
+    {
+        var list = new List<(string Item, int Count, int Quality)>(capacity: 256);
+        for (int i = 0; i < prediction.Count; i++)
+            list.AddRange(prediction[i].ItemsChosen);
+        return list;
+    }
+
+    public static Dictionary<(string Item, int Quality), int> GetAggregatedChosenItemCounts(IReadOnlyList<PredictedBundle> prediction)
+    {
+        var totals = new Dictionary<(string Item, int Quality), int>();
+        for (int i = 0; i < prediction.Count; i++)
+        {
+            foreach (var it in prediction[i].ItemsChosen)
+            {
+                var key = (it.Item, it.Quality);
+                totals[key] = totals.TryGetValue(key, out int cur) ? cur + it.Count : it.Count;
+            }
+        }
+        return totals;
+    }
+
+    // ---- item generation ----
+
+    private static (string Item, int Count, int Quality)[] GenerateItemTuplesLikeGame(
         Random rng,
         string itemList,
         int pickCount,
         int requiredItems,
         out int effectiveRequiredItems)
     {
-        // ParseRandomTags
         string expanded = ParseRandomTags(rng, itemList);
 
-        // item_list.Split(',') in game
-        // Keep raw item strings (including counts/qualities/names) so you can compare against UI.
         var tokens = expanded.Split(',', StringSplitOptions.RemoveEmptyEntries)
                              .Select(t => t.Trim())
                              .ToList();
@@ -136,7 +243,6 @@ public static class RemixedBundlePredictor
         if (requiredItems < 0)
             requiredItems = pickCount;
 
-        // while item_strings.Count > pick_count: remove random.Next(count)
         while (tokens.Count > pickCount)
         {
             int removeAt = rng.Next(tokens.Count);
@@ -144,7 +250,12 @@ public static class RemixedBundlePredictor
         }
 
         effectiveRequiredItems = requiredItems;
-        return tokens.ToArray();
+
+        var tuples = new (string Item, int Count, int Quality)[tokens.Count];
+        for (int i = 0; i < tokens.Count; i++)
+            tuples[i] = ParseItemRequirement(tokens[i]);
+
+        return tuples;
     }
 
     private static string ParseRandomTags(Random rng, string data)
@@ -172,7 +283,52 @@ public static class RemixedBundlePredictor
         return data;
     }
 
-    // --- loading RandomBundles.json internally ---
+    private static (string Item, int Count, int Quality) ParseItemRequirement(string token)
+    {
+        var parts = token.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        if (parts.Length < 2)
+            throw new InvalidDataException($"Invalid bundle item token: '{token}'");
+
+        if (!int.TryParse(parts[0], out int count))
+            throw new InvalidDataException($"Invalid bundle item count in token: '{token}'");
+
+        int quality = 0;
+        int idx = 1;
+
+        if (parts[idx] is "NQ" or "SQ" or "GQ" or "IQ")
+        {
+            quality = parts[idx] switch
+            {
+                "NQ" => 0,
+                "SQ" => 1,
+                "GQ" => 2,
+                "IQ" => 3,
+                _ => 0
+            };
+            idx++;
+        }
+
+        if (idx >= parts.Length)
+            throw new InvalidDataException($"Missing item name in token: '{token}'");
+
+        string item = string.Join(' ', parts, idx, parts.Length - idx);
+        return (item, count, quality);
+    }
+
+    private static (string Item, int Count)? TryParseCountedString(string s)
+    {
+        if (string.IsNullOrWhiteSpace(s)) return null;
+
+        var parts = s.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        if (parts.Length < 2) return null;
+
+        if (!int.TryParse(parts[0], out int count)) return null;
+
+        string item = string.Join(' ', parts, 1, parts.Length - 1);
+        return (item, count);
+    }
+
+    // ---- loading RandomBundles.json internally ----
 
     private static IReadOnlyList<RandomBundleData> LoadRandomBundles()
     {
@@ -189,22 +345,7 @@ public static class RemixedBundlePredictor
             return DeserializeRandomBundles(s);
         }
 
-        // fallback (optional)
-        string baseDir = AppContext.BaseDirectory;
-        string p1 = Path.Combine(baseDir, "RandomBundles.json");
-        string p2 = Path.Combine(baseDir, "Data", "RandomBundles.json");
-
-        foreach (var path in new[] { p1, p2 })
-        {
-            if (File.Exists(path))
-            {
-                using var fs = File.OpenRead(path);
-                return DeserializeRandomBundles(fs);
-            }
-        }
-
-        throw new FileNotFoundException(
-            "RandomBundles.json not found. Add it as an EmbeddedResource (recommended).");
+        throw new FileNotFoundException("RandomBundles.json not found. Add it as an EmbeddedResource.");
     }
 
     private static IReadOnlyList<RandomBundleData> DeserializeRandomBundles(Stream s)
@@ -225,10 +366,16 @@ public static class RemixedBundlePredictor
     }
 }
 
+
 public sealed record PredictedBundle(
+    string BundleId,  // e.g. "Crafts Room/13"
     string AreaName,
-    int SlotIndex,
-    int BundleKey,
+    int SlotIndex,    // 0..N-1 within that area
+    int BundleKey,    // the numeric key from area.Keys (e.g. 13)
     string Name,
-    string[] ItemsChosen,
-    int RequiredItems);
+    (string Item, int Count, int Quality)[] ItemsChosen,
+    int RequiredItems,
+    string RewardRaw,
+    (string Item, int Count)? RewardParsed);
+
+
