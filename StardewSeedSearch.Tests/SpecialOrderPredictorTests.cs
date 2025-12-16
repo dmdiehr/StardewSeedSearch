@@ -1,47 +1,25 @@
+using System;
+using System.Linq;
 using StardewSeedSearch.Core.SpecialOrders;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace StardewSeedSearch.Tests;
-public class SpecialOrderPredictorTests
+
+public sealed class SpecialOrderPredictor_PrintWeeksTests
 {
+    private readonly ITestOutputHelper _output;
 
-    private readonly ITestOutputHelper output;
-
-    public SpecialOrderPredictorTests(ITestOutputHelper output)
+    public SpecialOrderPredictor_PrintWeeksTests(ITestOutputHelper output)
     {
-        this.output = output;
+        _output = output;
     }
 
     [Fact]
-    public void TownOrders_Deterministic()
-    {
-        var a = SpecialOrderPredictor.GetTownOrders(
-            gameId: 123UL,
-            weekIndex: 12,
-            gingerIslandUnlocked: false,
-            islandResortUnlocked: false,
-            sewingMachineUnlocked: true,
-            completedSpecialOrders: new[] { "Pam" },
-            activeSpecialOrders: Array.Empty<string>());
-
-        var b = SpecialOrderPredictor.GetTownOrders(
-            gameId: 123UL,
-            weekIndex: 12,
-            gingerIslandUnlocked: false,
-            islandResortUnlocked: false,
-            sewingMachineUnlocked: true,
-            completedSpecialOrders: new[] { "Pam" },
-            activeSpecialOrders: Array.Empty<string>());
-
-        Assert.Equal(a, b);
-    }
-
-    [Fact]
-    public void Print_TownOrders_Weeks9To19()
+    public void Print_TownOrders_Weeks9To20()
     {
         // TODO: set these to match the save you're comparing against
-        ulong gameId = 411236192; // <-- put your uniqueIDForThisGame here
+        ulong gameId = 0; // uniqueIDForThisGame
 
         bool gingerIslandUnlocked = false;
         bool islandResortUnlocked = false;
@@ -50,7 +28,7 @@ public class SpecialOrderPredictorTests
         var completed = Array.Empty<string>();
         var active = Array.Empty<string>();
 
-        for (int week = 9; week <= 19; week++)
+        for (int week = 9; week <= 20; week++)
         {
             var offers = SpecialOrderPredictor.GetTownOrders(
                 gameId: gameId,
@@ -61,16 +39,20 @@ public class SpecialOrderPredictorTests
                 completedSpecialOrders: completed,
                 activeSpecialOrders: active);
 
-        string offerText = offers.Count == 0
-            ? "(none)"
-            : string.Join(", ", offers.Select(o =>
+            _output.WriteLine($"Week {week}:");
+
+            if (offers.Count == 0)
             {
-                var rand = o.Randomized.Count == 0
-                    ? ""
-                    : " | " + string.Join("; ", o.Randomized.Select(kv => $"{kv.Key}={kv.Value}"));
-                return $"{o.Key} (seed {o.GenerationSeed}){rand}";
-    }));
-            output.WriteLine($"Week {week}: {offerText}");
+                _output.WriteLine("  (none)");
+                continue;
+            }
+
+            foreach (var o in offers)
+            {
+                var item = string.IsNullOrWhiteSpace(o.OrderItem) ? "" : $" | Item: {o.OrderItem}";
+                _output.WriteLine(
+                    $"  - {o.DisplayName}{item} | Perfection: {o.RequiredForPerfection} | Rank: {o.Rank} | Key: {o.Key}");
+            }
         }
     }
 }

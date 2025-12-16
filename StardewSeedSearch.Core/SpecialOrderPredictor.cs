@@ -1,5 +1,5 @@
-using System.Text.Json;
 using System.Reflection;
+using System.Text.Json;
 
 namespace StardewSeedSearch.Core.SpecialOrders;
 
@@ -7,6 +7,9 @@ public static class SpecialOrderPredictor
 {
     private static readonly Lazy<IReadOnlyDictionary<string, SpecialOrderDataDto>> _data =
         new(LoadEmbeddedSpecialOrders);
+
+    private static readonly Lazy<IReadOnlyDictionary<string, SpecialOrderAugmentDto>> _augment =
+        new(LoadEmbeddedSpecialOrdersAugment);
 
     private static readonly string[] Seasons = ["spring", "summer", "fall", "winter"];
 
@@ -22,13 +25,13 @@ public static class SpecialOrderPredictor
         completedSpecialOrders ??= Array.Empty<string>();
         activeSpecialOrders ??= Array.Empty<string>();
 
-        var data = _data.Value;
-
-        var (season, dayOfMonth, daysPlayed) = MapWeekIndexToRefreshDay(weekIndex);
-
-        // Mirror board unlock (DaysPlayed >= 58)
         if (weekIndex < 9)
             return Array.Empty<SpecialOrderOffer>();
+
+        var data = _data.Value;
+        var augment = _augment.Value;
+
+        var (season, dayOfMonth, daysPlayed) = MapWeekIndexToRefreshDay(weekIndex);
 
         // Random r = Utility.CreateRandom(Game1.uniqueIDForThisGame, (double)DaysPlayed * 1.3);
         var r = StardewRng.CreateRandom((double)gameId, (double)daysPlayed * 1.3);
@@ -77,8 +80,11 @@ public static class SpecialOrderPredictor
             if (string.IsNullOrEmpty(key))
                 break;
 
-            int generationSeed = r.Next(); // this is exactly what GetSpecialOrder receives
-            var randomized = ResolveRandomizedElements(
+            // This is exactly what GetSpecialOrder(key, r.Next()) uses internally.
+            int generationSeed = r.Next();
+
+            string? orderItem = ResolveOrderItem(
+                orderKey: key,
                 orderData: data[key],
                 generationSeed: generationSeed,
                 season: season,
@@ -87,12 +93,38 @@ public static class SpecialOrderPredictor
                 sewingMachineUnlocked: sewingMachineUnlocked,
                 completedSpecialOrders: completedSpecialOrders);
 
-            results.Add(new SpecialOrderOffer(key, generationSeed, randomized));
+            var (baseName, requiredForPerfection, rank) = GetAugment(augment, key);
+
+            // Compose display name in the style you want: "Cave Patrol - Grub"
+            string displayName = baseName;
+            if (!string.IsNullOrWhiteSpace(orderItem))
+                displayName = $"{displayName} - {orderItem}";
+
+            results.Add(new SpecialOrderOffer(
+                Key: key,
+                DisplayName: displayName,
+                OrderItem: orderItem,
+                RequiredForPerfection: requiredForPerfection,
+                Rank: rank));
+
             keyQueue.Remove(key);
             keysIncludingCompleted.Remove(key);
         }
 
         return results;
+    }
+
+    private static (string DisplayName, bool RequiredForPerfection, int Rank) GetAugment(
+        IReadOnlyDictionary<string, SpecialOrderAugmentDto> augment,
+        string key)
+    {
+        if (augment.TryGetValue(key, out var a))
+        {
+            var name = string.IsNullOrWhiteSpace(a.DisplayName) ? key : a.DisplayName!;
+            return (name, a.RequiredForPerfection, a.Rank);
+        }
+
+        return (key, false, 0);
     }
 
     private static bool CanStartOrderNow(
@@ -124,8 +156,8 @@ public static class SpecialOrderPredictor
                 completedSpecialOrders))
             return false;
 
-        // GameStateQuery.CheckConditions(order.Condition) is ignored for town orders
-        // because Condition is empty for all town entries in your current json.
+        // GameStateQuery.CheckConditions(order.Condition) ignored for town orders
+        // (Condition is empty for all OrderType=="" entries in your current json).
 
         // foreach (active specialOrders) if (questKey == orderId) return false;
         if (activeSpecialOrders.Contains(orderId))
@@ -193,12 +225,75 @@ public static class SpecialOrderPredictor
         if (tag.StartsWith("completed_", StringComparison.Ordinal))
             return completedSpecialOrders.Contains(tag["completed_".Length..]);
 
-        // You said: assume all NPCs are known.
+        // assume all NPCs are known
         if (tag.StartsWith("knows_", StringComparison.Ordinal))
             return true;
 
-        // For town orders in your json, nothing else should appear.
         return false;
+    }
+
+    private static string? ResolveOrderItem(
+        string orderKey,
+        SpecialOrderDataDto orderData,
+        int generationSeed,
+        string season,
+        bool gingerIslandUnlocked,
+        bool islandResortUnlocked,
+        bool sewingMachineUnlocked,
+        IReadOnlyCollection<string> completedSpecialOrders)
+    {
+        if (orderData.RandomizedElements is null || orderData.RandomizedElements.Count == 0)
+            return null;
+
+        // Mirrors: Random r = Utility.CreateRandom(generation_seed.Value);
+        var r = StardewRng.CreateRandom(generationSeed);
+
+        foreach (var element in orderData.RandomizedElements)
+        {
+            // pick index exactly like the game
+            var validIndices = new List<int>();
+            for (int i = 0; i < element.Values.Count; i++)
+            {
+                if (CheckTags(element.Values[i].RequiredTags, season,
+                        gingerIslandUnlocked, islandResortUnlocked, sewingMachineUnlocked, completedSpecialOrders))
+                    validIndices.Add(i);
+            }
+
+            int selectedIndex = validIndices.Count > 0 ? r.ChooseFrom(validIndices) : 0;
+            if (selectedIndex < 0 || selectedIndex >= element.Values.Count)
+                selectedIndex = 0;
+
+            string value = element.Values[selectedIndex].Value;
+
+            // Case 1: PICK_ITEM <list>
+            if (value.StartsWith("PICK_ITEM", StringComparison.Ordinal))
+            {
+                string list = value.Substring("PICK_ITEM".Length);
+                var options = list.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+                var chosen = options.Length > 0 ? (r.ChooseFrom(options) ?? "") : "";
+                return string.IsNullOrWhiteSpace(chosen) ? null : chosen;
+            }
+
+            // Case 2: Clint style "Target|Grub|LocalizedName|[...]"
+            if (value.StartsWith("Target|", StringComparison.Ordinal))
+            {
+                var parts = value.Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+                if (parts.Length >= 2)
+                    return parts[1]; // e.g. "Grub"
+            }
+
+            // Case 3: Demetrius2 fish pool "…|Tags|fish_river"
+            if (value.Contains("|Tags|fish_", StringComparison.Ordinal))
+            {
+                if (value.Contains("fish_river", StringComparison.Ordinal)) return "River Fish";
+                if (value.Contains("fish_ocean", StringComparison.Ordinal)) return "Ocean Fish";
+                if (value.Contains("fish_lake", StringComparison.Ordinal)) return "Lake Fish";
+            }
+
+            // Otherwise: ignore (text randomization etc.)
+        }
+
+        return null;
     }
 
     private static (string season, int dayOfMonth, int daysPlayed) MapWeekIndexToRefreshDay(int weekIndex)
@@ -209,7 +304,6 @@ public static class SpecialOrderPredictor
         // weekIndex 1 => Spring 1 (DaysPlayed=1)
         int weekZero = weekIndex - 1;
 
-        int yearIndex = weekZero / 16;               // unused currently
         int seasonIndex = (weekZero / 4) % 4;
         int weekOfSeason = weekZero % 4;
 
@@ -217,82 +311,65 @@ public static class SpecialOrderPredictor
         int mondayDayOfMonth = 1 + (weekOfSeason * 7);
         int mondayDaysPlayed = 1 + (weekZero * 7);
 
-
-        _ = yearIndex;
         return (season, mondayDayOfMonth, mondayDaysPlayed);
     }
 
     private static IReadOnlyDictionary<string, SpecialOrderDataDto> LoadEmbeddedSpecialOrders()
     {
-        var asm = typeof(SpecialOrderPredictor).Assembly;
-
-        // Put the json at: StardewSeedSearch.Core/Assets/Data/SpecialOrders.json
-        var resourceName = asm.GetManifestResourceNames()
-            .Single(n => n.EndsWith("SpecialOrders.json", StringComparison.OrdinalIgnoreCase));
-
-        using var stream = asm.GetManifestResourceStream(resourceName)
-            ?? throw new InvalidOperationException($"Missing embedded resource: {resourceName}");
-
-        using var reader = new StreamReader(stream);
-        var json = reader.ReadToEnd();
-
+        var json = ReadEmbeddedTextOrThrow("SpecialOrders.json");
         var dict = JsonSerializer.Deserialize<Dictionary<string, SpecialOrderDataDto>>(json,
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
         return dict ?? throw new InvalidOperationException("Failed to parse embedded SpecialOrders.json");
     }
-    private static IReadOnlyDictionary<string, string> ResolveRandomizedElements(
-    SpecialOrderDataDto orderData,
-    int generationSeed,
-    string season,
-    bool gingerIslandUnlocked,
-    bool islandResortUnlocked,
-    bool sewingMachineUnlocked,
-    IReadOnlyCollection<string> completedSpecialOrders)
-{
-    var result = new Dictionary<string, string>();
 
-    if (orderData.RandomizedElements is null || orderData.RandomizedElements.Count == 0)
-        return result;
-
-    // Mirrors: Random r = Utility.CreateRandom(generation_seed.Value);
-    var r = StardewRng.CreateRandom(generationSeed);
-
-    foreach (var element in orderData.RandomizedElements)
+    private static IReadOnlyDictionary<string, SpecialOrderAugmentDto> LoadEmbeddedSpecialOrdersAugment()
     {
-        var validIndices = new List<int>();
-        for (int i = 0; i < element.Values.Count; i++)
-        {
-            var req = element.Values[i].RequiredTags;
-            if (CheckTags(req, season, gingerIslandUnlocked, islandResortUnlocked, sewingMachineUnlocked, completedSpecialOrders))
-                validIndices.Add(i);
-        }
+        // Optional: if you haven't added the file yet, we just return empty and fall back to defaults.
+        var json = ReadEmbeddedTextOrNull("SpecialOrders.augment.json");
+        if (json is null)
+            return new Dictionary<string, SpecialOrderAugmentDto>();
 
-        int selectedIndex = validIndices.Count > 0 ? r.ChooseFrom(validIndices) : 0;
-        if (selectedIndex < 0 || selectedIndex >= element.Values.Count)
-            selectedIndex = 0;
+        var dict = JsonSerializer.Deserialize<Dictionary<string, SpecialOrderAugmentDto>>(json,
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-        string value = element.Values[selectedIndex].Value;
-
-        // If not PICK_ITEM, just record the raw value
-        if (!value.StartsWith("PICK_ITEM", StringComparison.Ordinal))
-        {
-            result[element.Name] = value;
-            continue;
-        }
-
-        // Mirrors:
-        // value = value.Substring("PICK_ITEM".Length);
-        // string[] array = value.Split(',');
-        // ... choose from list
-        string list = value.Substring("PICK_ITEM".Length);
-        var options = list.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
-
-        string chosen = options.Length > 0 ? r.ChooseFrom(options) ?? "" : "";
-        result[element.Name] = chosen;
+        return dict ?? new Dictionary<string, SpecialOrderAugmentDto>();
     }
 
-    return result;
+    private static string ReadEmbeddedTextOrThrow(string endsWith)
+    {
+        var asm = typeof(SpecialOrderPredictor).Assembly;
+        var resourceName = asm.GetManifestResourceNames()
+            .Single(n => n.EndsWith(endsWith, StringComparison.OrdinalIgnoreCase));
+
+        using var stream = asm.GetManifestResourceStream(resourceName)
+            ?? throw new InvalidOperationException($"Missing embedded resource: {resourceName}");
+
+        using var reader = new StreamReader(stream);
+        return reader.ReadToEnd();
+    }
+
+    private static string? ReadEmbeddedTextOrNull(string endsWith)
+    {
+        var asm = typeof(SpecialOrderPredictor).Assembly;
+        var resourceName = asm.GetManifestResourceNames()
+            .FirstOrDefault(n => n.EndsWith(endsWith, StringComparison.OrdinalIgnoreCase));
+
+        if (resourceName is null)
+            return null;
+
+        using var stream = asm.GetManifestResourceStream(resourceName);
+        if (stream is null)
+            return null;
+
+        using var reader = new StreamReader(stream);
+        return reader.ReadToEnd();
+    }
 }
 
+public sealed class SpecialOrderAugmentDto
+{
+    public string? DisplayName { get; set; }
+    public bool RequiredForPerfection { get; set; }
+    public int Rank { get; set; }
 }

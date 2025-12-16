@@ -2,8 +2,10 @@
 namespace StardewSeedSearch.Core.SpecialOrders;
 public sealed record SpecialOrderOffer(
     string Key,
-    int GenerationSeed,
-    IReadOnlyDictionary<string, string> Randomized // elementName -> resolved value (e.g. chosen fish)
+    string DisplayName,
+    string? OrderItem,
+    bool RequiredForPerfection,
+    int Rank
 );
 
 public sealed class SpecialOrderDataDto
