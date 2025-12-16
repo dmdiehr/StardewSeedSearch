@@ -3,10 +3,7 @@ using System.Text.Json;
 
 namespace StardewSeedSearch.Core.SpecialOrders;
 
-public sealed record SpecialOrderSimSchedule(
-    int GingerIslandUnlockWeek = 11,
-    int IslandResortUnlockWeek = 13,
-    int SewingMachineUnlockWeek = 9)
+public sealed record SpecialOrderSimSchedule(int GingerIslandUnlockWeek = 11,int IslandResortUnlockWeek = 13,int SewingMachineUnlockWeek = 9)
 {
     public bool GingerIslandUnlocked(int week) => week >= GingerIslandUnlockWeek;
     public bool IslandResortUnlocked(int week) => week >= IslandResortUnlockWeek;
@@ -35,6 +32,10 @@ public sealed record SpecialOrderSimResult(
 
 public static class SpecialOrderSimulator
 {
+    private static readonly string[][] PerfectionEitherOrGroups =
+    {
+        new[] { "Demetrius", "Demetrius2" }
+    };
     private static readonly Lazy<IReadOnlyDictionary<string, SpecialOrderDataDto>> _data =
         new(LoadEmbeddedSpecialOrders);
 
@@ -191,8 +192,17 @@ public static class SpecialOrderSimulator
         HashSet<string> completedPerfection)
     {
         if (augment.TryGetValue(key, out var a) && a.RequiredForPerfection)
-            completedPerfection.Add(key);
-
+        {
+            if (key is "Demetrius" or "Demetrius2")
+            {
+                completedPerfection.Add("Demetrius");
+                completedPerfection.Add("Demetrius2");
+            }
+            else
+            {
+                completedPerfection.Add(key);
+            }
+        }
         // mimic pool behavior you observed/targeted: only non-repeatables should land in completedForGamePool
         if (data.TryGetValue(key, out var d) && !d.Repeatable)
             completedForGamePool.Add(key);

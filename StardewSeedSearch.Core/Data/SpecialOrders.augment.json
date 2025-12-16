@@ -1,8 +1,8 @@
 {
   "Caroline": { "DisplayName": "Island Ingredients", "Repeatable": true, "RequiredForPerfection": true, "Rank": 1 },
   "Clint": { "DisplayName": "Cave Patrol", "Repeatable": true, "RequiredForPerfection": true, "Rank": 7 },
-  "Demetrius": { "DisplayName": "Aquatic Overpopulation", "Repeatable": true, "RequiredForPerfection": false, "Rank": 9 },
-  "Demetrius2": { "DisplayName": "Biome Ballance", "Repeatable": true, "RequiredForPerfection": false, "Rank": 10 },
+  "Demetrius": { "DisplayName": "Aquatic Overpopulation", "Repeatable": true, "RequiredForPerfection": true, "Rank": 9 },
+  "Demetrius2": { "DisplayName": "Biome Ballance", "Repeatable": true, "RequiredForPerfection": true, "Rank": 10 },
   "DesertFestivalMarlon1": { "DisplayName": "DesertFestivalMarlon1", "Repeatable": true, "RequiredForPerfection": false, "Rank": 100 },
   "DesertFestivalMarlon2": { "DisplayName": "DesertFestivalMarlon2", "Repeatable": true, "RequiredForPerfection": false, "Rank": 100 },
   "DesertFestivalMarlon3": { "DisplayName": "DesertFestivalMarlon3", "Repeatable": true, "RequiredForPerfection": false, "Rank": 100 },
