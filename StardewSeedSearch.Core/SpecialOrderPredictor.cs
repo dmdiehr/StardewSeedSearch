@@ -78,8 +78,16 @@ public static class SpecialOrderPredictor
                 break;
 
             int generationSeed = r.Next(); // this is exactly what GetSpecialOrder receives
-            results.Add(new SpecialOrderOffer(key, generationSeed));
+            var randomized = ResolveRandomizedElements(
+                orderData: data[key],
+                generationSeed: generationSeed,
+                season: season,
+                gingerIslandUnlocked: gingerIslandUnlocked,
+                islandResortUnlocked: islandResortUnlocked,
+                sewingMachineUnlocked: sewingMachineUnlocked,
+                completedSpecialOrders: completedSpecialOrders);
 
+            results.Add(new SpecialOrderOffer(key, generationSeed, randomized));
             keyQueue.Remove(key);
             keysIncludingCompleted.Remove(key);
         }
@@ -233,4 +241,58 @@ public static class SpecialOrderPredictor
 
         return dict ?? throw new InvalidOperationException("Failed to parse embedded SpecialOrders.json");
     }
+    private static IReadOnlyDictionary<string, string> ResolveRandomizedElements(
+    SpecialOrderDataDto orderData,
+    int generationSeed,
+    string season,
+    bool gingerIslandUnlocked,
+    bool islandResortUnlocked,
+    bool sewingMachineUnlocked,
+    IReadOnlyCollection<string> completedSpecialOrders)
+{
+    var result = new Dictionary<string, string>();
+
+    if (orderData.RandomizedElements is null || orderData.RandomizedElements.Count == 0)
+        return result;
+
+    // Mirrors: Random r = Utility.CreateRandom(generation_seed.Value);
+    var r = StardewRng.CreateRandom(generationSeed);
+
+    foreach (var element in orderData.RandomizedElements)
+    {
+        var validIndices = new List<int>();
+        for (int i = 0; i < element.Values.Count; i++)
+        {
+            var req = element.Values[i].RequiredTags;
+            if (CheckTags(req, season, gingerIslandUnlocked, islandResortUnlocked, sewingMachineUnlocked, completedSpecialOrders))
+                validIndices.Add(i);
+        }
+
+        int selectedIndex = validIndices.Count > 0 ? r.ChooseFrom(validIndices) : 0;
+        if (selectedIndex < 0 || selectedIndex >= element.Values.Count)
+            selectedIndex = 0;
+
+        string value = element.Values[selectedIndex].Value;
+
+        // If not PICK_ITEM, just record the raw value
+        if (!value.StartsWith("PICK_ITEM", StringComparison.Ordinal))
+        {
+            result[element.Name] = value;
+            continue;
+        }
+
+        // Mirrors:
+        // value = value.Substring("PICK_ITEM".Length);
+        // string[] array = value.Split(',');
+        // ... choose from list
+        string list = value.Substring("PICK_ITEM".Length);
+        var options = list.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+
+        string chosen = options.Length > 0 ? r.ChooseFrom(options) ?? "" : "";
+        result[element.Name] = chosen;
+    }
+
+    return result;
+}
+
 }

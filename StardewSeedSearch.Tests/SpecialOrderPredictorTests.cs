@@ -61,10 +61,15 @@ public class SpecialOrderPredictorTests
                 completedSpecialOrders: completed,
                 activeSpecialOrders: active);
 
-            string offerText = offers.Count == 0
-                ? "(none)"
-                : string.Join(", ", offers.Select(o => $"{o.Key} (seed {o.GenerationSeed})"));
-
+        string offerText = offers.Count == 0
+            ? "(none)"
+            : string.Join(", ", offers.Select(o =>
+            {
+                var rand = o.Randomized.Count == 0
+                    ? ""
+                    : " | " + string.Join("; ", o.Randomized.Select(kv => $"{kv.Key}={kv.Value}"));
+                return $"{o.Key} (seed {o.GenerationSeed}){rand}";
+    }));
             output.WriteLine($"Week {week}: {offerText}");
         }
     }
