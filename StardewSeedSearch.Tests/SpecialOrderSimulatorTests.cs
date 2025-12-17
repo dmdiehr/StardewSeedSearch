@@ -14,7 +14,7 @@ public sealed class SpecialOrderSimulator_PrintTests
     [Fact]
     public void Sim_Print_Town_Weeks9To20()
     {
-        ulong gameId = 10019; // <-- set this
+        ulong gameId = 1001288; // <-- set this
 
         var schedule = new SpecialOrderSimSchedule();
 
@@ -81,60 +81,126 @@ public sealed class SpecialOrderSimulator_PrintTests
             }
         }
 
-            [Fact]
-            public void Scan_ConsecutiveSeeds_TownPerfection_Best10_ByWeek28()
+        [Fact]
+        public void Scan_ConsecutiveSeeds_TownPerfection_Best10_ByWeek28()
+        {
+            // ---- Configure ----
+            ulong startGameId = 1000000;  // set this
+            int seedCount = 1000000;    // scan this many consecutive seeds
+            int startWeek = 9;
+            int capWeek = 20;
+
+            var schedule = new SpecialOrderSimSchedule();
+            // -------------------
+
+            var results = new List<SeedResult>(seedCount);
+
+            for (ulong offset = 0; offset < (ulong)seedCount; offset++)
             {
-                // ---- Configure ----
-                ulong startGameId = 10000;  // set this
-                int seedCount = 10000;    // scan this many consecutive seeds
-                int startWeek = 9;
-                int capWeek = 28;
+                ulong gameId = startGameId + offset;
 
-                var schedule = new SpecialOrderSimSchedule();
-                // -------------------
+                var sim = SpecialOrderSimulator.SimulateTown(
+                    gameId: gameId,
+                    startWeekIndex: startWeek,
+                    endWeekIndex: capWeek,
+                    schedule: schedule);
 
-                var results = new List<SeedResult>(seedCount);
+                results.Add(new SeedResult(
+                    GameId: gameId,
+                    CompletedWeek: sim.PerfectionCompletedWeekIndex,
+                    CompletedDaysPlayed: sim.PerfectionCompletedDaysPlayed));
+            }
 
-                for (ulong offset = 0; offset < (ulong)seedCount; offset++)
+            var completed = results
+                .Where(r => r.CompletedWeek.HasValue)
+                .OrderBy(r => r.CompletedWeek!.Value)
+                .ThenBy(r => r.CompletedDaysPlayed ?? int.MaxValue)
+                .ThenBy(r => r.GameId)
+                .Take(10)
+                .ToList();
+
+            _output.WriteLine($"Scanned {seedCount} seeds starting at {startGameId}.");
+            _output.WriteLine($"Completed by week {capWeek}: {results.Count(r => r.CompletedWeek.HasValue)}");
+            _output.WriteLine("");
+
+            if (completed.Count == 0)
+            {
+                _output.WriteLine("No seeds completed within the cap.");
+                return;
+            }
+
+            _output.WriteLine("Best 10 seeds:");
+            for (int i = 0; i < completed.Count; i++)
+            {
+                var r = completed[i];
+                _output.WriteLine(
+                    $"{i + 1,2}. Seed {r.GameId}: week {r.CompletedWeek} (DaysPlayed={r.CompletedDaysPlayed})");
+            }
+        }
+
+        [Fact]
+        public void Write_AllSeeds_ThatCompleteOnWeek18_ToFile()
+        {
+            // ---- Configure ----
+            ulong startGameId = 1;   // set this
+            int seedCount = 1000;  // scan this many consecutive seeds
+            int startWeek = 9;
+            int capWeek = 19;
+
+            // Set your progression assumptions here
+            var schedule = new SpecialOrderSimSchedule();
+
+            const int targetWeek = 18;
+            // -------------------
+
+            var matches = new List<(ulong GameId, int DaysPlayed)>();
+
+            for (ulong offset = 0; offset < (ulong)seedCount; offset++)
+            {
+                ulong gameId = startGameId + offset;
+
+                var sim = SpecialOrderSimulator.SimulateTown(
+                    gameId: gameId,
+                    startWeekIndex: startWeek,
+                    endWeekIndex: capWeek,
+                    schedule: schedule);
+
+                if (sim.PerfectionCompletedWeekIndex == targetWeek)
                 {
-                    ulong gameId = startGameId + offset;
-
-                    var sim = SpecialOrderSimulator.SimulateTown(
-                        gameId: gameId,
-                        startWeekIndex: startWeek,
-                        endWeekIndex: capWeek,
-                        schedule: schedule);
-
-                    results.Add(new SeedResult(
-                        GameId: gameId,
-                        CompletedWeek: sim.PerfectionCompletedWeekIndex,
-                        CompletedDaysPlayed: sim.PerfectionCompletedDaysPlayed));
-                }
-
-                var completed = results
-                    .Where(r => r.CompletedWeek.HasValue)
-                    .OrderBy(r => r.CompletedWeek!.Value)
-                    .ThenBy(r => r.CompletedDaysPlayed ?? int.MaxValue)
-                    .ThenBy(r => r.GameId)
-                    .Take(10)
-                    .ToList();
-
-                _output.WriteLine($"Scanned {seedCount} seeds starting at {startGameId}.");
-                _output.WriteLine($"Completed by week {capWeek}: {results.Count(r => r.CompletedWeek.HasValue)}");
-                _output.WriteLine("");
-
-                if (completed.Count == 0)
-                {
-                    _output.WriteLine("No seeds completed within the cap.");
-                    return;
-                }
-
-                _output.WriteLine("Best 10 seeds:");
-                for (int i = 0; i < completed.Count; i++)
-                {
-                    var r = completed[i];
-                    _output.WriteLine(
-                        $"{i + 1,2}. Seed {r.GameId}: week {r.CompletedWeek} (DaysPlayed={r.CompletedDaysPlayed})");
+                    matches.Add((gameId, sim.PerfectionCompletedDaysPlayed ?? -1));
                 }
             }
+
+            matches.Sort((a, b) =>
+            {
+                int cmp = a.DaysPlayed.CompareTo(b.DaysPlayed);
+                return cmp != 0 ? cmp : a.GameId.CompareTo(b.GameId);
+            });
+
+            // Write to test output directory (bin/...); easy to find and always writable.
+            string path = Path.Combine(AppContext.BaseDirectory, "../../../../Output/SimulationOutput.txt");
+
+            var lines = new List<string>(capacity: matches.Count + 5)
+            {
+                $"StartGameId: {startGameId}",
+                $"SeedCount: {seedCount}",
+                $"TargetCompletionWeek: {targetWeek}",
+                $"Matches: {matches.Count}",
+                ""
+            };
+
+            lines.AddRange(matches.Select(m => $"{m.GameId}\tDaysPlayed={m.DaysPlayed}"));
+
+            File.WriteAllLines(path, lines);
+
+            _output.WriteLine($"Found {matches.Count} seeds completing on week {targetWeek}.");
+            _output.WriteLine($"Wrote results to: {path}");
+        }
+
+        [Fact]
+        public void CheckCanCompleteTownPerfectionByWeekAgainstKnownGames()
+        {
+            Assert.False(SpecialOrderSimulator.CanCompleteTownPerfectionByWeek(1,18));
+            Assert.True(SpecialOrderSimulator.CanCompleteTownPerfectionByWeek(151,18));
+        }
 }

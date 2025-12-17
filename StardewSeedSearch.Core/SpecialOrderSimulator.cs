@@ -165,6 +165,25 @@ public static class SpecialOrderSimulator
         );
     }
 
+    public static bool CanCompleteTownPerfectionByWeek(
+    ulong gameId,
+    int targetWeekIndex)
+    {
+        if (targetWeekIndex < 9)
+            return false;
+
+        var schedule = new SpecialOrderSimSchedule(); // defaults (never unlock)
+        var sim = SimulateTown(
+            gameId: gameId,
+            startWeekIndex: 9,
+            endWeekIndex: targetWeekIndex,
+            schedule: schedule);
+
+        return sim.PerfectionCompletedWeekIndex.HasValue
+            && sim.PerfectionCompletedWeekIndex.Value <= targetWeekIndex;
+    }
+
+
     private static void ExpireAndComplete(
         int mondayDaysPlayed,
         List<SpecialOrderActive> active,
