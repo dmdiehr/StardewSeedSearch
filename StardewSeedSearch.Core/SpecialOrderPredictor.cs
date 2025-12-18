@@ -5,6 +5,15 @@ namespace StardewSeedSearch.Core.SpecialOrders;
 
 public static class SpecialOrderPredictor
 {
+    private sealed record TagContext(
+    string Season,
+    bool GingerIslandUnlocked,
+    bool IslandResortUnlocked,
+    bool SewingMachineUnlocked,
+    IReadOnlyCollection<string> CompletedSpecialOrders,
+    IReadOnlySet<string> ActiveRules,
+    IReadOnlySet<string> ActiveDropBoxes
+);
     private static readonly Lazy<IReadOnlyDictionary<string, SpecialOrderDataDto>> _data =
         new(LoadEmbeddedSpecialOrders);
 
@@ -13,6 +22,7 @@ public static class SpecialOrderPredictor
 
     private static readonly string[] Seasons = ["spring", "summer", "fall", "winter"];
 
+    
     public static IReadOnlyList<SpecialOrderOffer> GetTownOrders(
         ulong gameId,
         int weekIndex,
@@ -36,6 +46,19 @@ public static class SpecialOrderPredictor
         // Random r = Utility.CreateRandom(Game1.uniqueIDForThisGame, (double)DaysPlayed * 1.3);
         var r = StardewRng.CreateRandom((double)gameId, (double)daysPlayed * 1.3);
 
+        // Compute rules/dropboxes from activeSpecialOrders
+        var (activeRules, activeDropBoxes) = ComputeActiveRuleAndDropboxes(data, activeSpecialOrders);
+
+        var ctx = new TagContext(
+            Season: season,
+            GingerIslandUnlocked: gingerIslandUnlocked,
+            IslandResortUnlocked: islandResortUnlocked,
+            SewingMachineUnlocked: sewingMachineUnlocked,
+            CompletedSpecialOrders: completedSpecialOrders,
+            ActiveRules: activeRules,
+            ActiveDropBoxes: activeDropBoxes
+        );
+        
         // Build candidate list via CanStartOrderNow(key, data)
         var keyQueue = new List<string>();
         foreach (var (key, order) in data)
@@ -46,12 +69,8 @@ public static class SpecialOrderPredictor
             if (CanStartOrderNow(
                     orderId: key,
                     order: order,
-                    season: season,
                     dayOfMonth: dayOfMonth,
-                    gingerIslandUnlocked: gingerIslandUnlocked,
-                    islandResortUnlocked: islandResortUnlocked,
-                    sewingMachineUnlocked: sewingMachineUnlocked,
-                    completedSpecialOrders: completedSpecialOrders,
+                    ctx: ctx,
                     activeSpecialOrders: activeSpecialOrders))
             {
                 keyQueue.Add(key);
@@ -87,11 +106,7 @@ public static class SpecialOrderPredictor
                 orderKey: key,
                 orderData: data[key],
                 generationSeed: generationSeed,
-                season: season,
-                gingerIslandUnlocked: gingerIslandUnlocked,
-                islandResortUnlocked: islandResortUnlocked,
-                sewingMachineUnlocked: sewingMachineUnlocked,
-                completedSpecialOrders: completedSpecialOrders);
+                ctx: ctx);
 
             var (baseName, requiredForPerfection, rank) = GetAugment(augment, key);
 
@@ -114,6 +129,105 @@ public static class SpecialOrderPredictor
         return results;
     }
 
+    public static IReadOnlyList<SpecialOrderOffer> GetQiOrders(
+    ulong gameId,
+    int weekIndex,
+    bool gingerIslandUnlocked = true, // Qi board implies island; override if you want
+    bool islandResortUnlocked = true,
+    bool sewingMachineUnlocked = true,
+    IReadOnlyCollection<string>? completedSpecialOrders = null,
+    IReadOnlyCollection<string>? activeSpecialOrders = null)
+    {
+        completedSpecialOrders ??= Array.Empty<string>();
+        activeSpecialOrders ??= Array.Empty<string>();
+
+        var data = _data.Value;
+
+        var (season, dayOfMonth, daysPlayed) = MapWeekIndexToRefreshDay(weekIndex);
+
+        // RNG matches SpecialOrder.UpdateAvailableSpecialOrders: CreateRandom(uniqueIDForThisGame, DaysPlayed*1.3)
+        var r = StardewRng.CreateRandom((double)gameId, (double)daysPlayed * 1.3);
+
+        // Compute rule/dropbox tags from active quests so "!rule_" / "!dropbox_" filters work.
+        var (activeRules, activeDropBoxes) = ComputeActiveRuleAndDropboxes(data, activeSpecialOrders);
+
+        var ctx = new TagContext(
+            Season: season,
+            GingerIslandUnlocked: gingerIslandUnlocked,
+            IslandResortUnlocked: islandResortUnlocked,
+            SewingMachineUnlocked: sewingMachineUnlocked,
+            CompletedSpecialOrders: completedSpecialOrders,
+            ActiveRules: activeRules,
+            ActiveDropBoxes: activeDropBoxes
+        );
+
+        // Build candidate list
+        var keyQueue = new List<string>();
+        foreach (var (key, order) in data)
+        {
+            if (!string.Equals(order.OrderType?.Trim(), "Qi", StringComparison.OrdinalIgnoreCase))
+                continue;
+
+            if (CanStartOrderNow(
+                    orderId: key,
+                    order: order,
+                    dayOfMonth: dayOfMonth,
+                    ctx: ctx,
+                    activeSpecialOrders: activeSpecialOrders))
+            {
+                keyQueue.Add(key);
+            }
+        }
+
+        // NOTE: for Qi, we do NOT remove completed from the pool (game only does that for orderType=="")
+        var keysIncludingCompleted = new List<string>(keyQueue);
+
+        var results = new List<SpecialOrderOffer>(2);
+
+        for (int i = 0; i < 2; i++)
+        {
+            if (keyQueue.Count == 0)
+            {
+                if (keysIncludingCompleted.Count == 0)
+                    break;
+
+                keyQueue = new List<string>(keysIncludingCompleted);
+            }
+
+            var key = r.ChooseFrom(keyQueue);
+            if (string.IsNullOrEmpty(key))
+                break;
+
+            int generationSeed = r.Next();
+
+            string? orderItem = ResolveOrderItem(
+                orderKey: key,
+                orderData: data[key],
+                generationSeed: generationSeed,
+                ctx: ctx);
+
+            var (baseName, requiredForPerfection, rank) = GetAugment(_augment.Value, key);
+
+            string displayName = baseName;
+            if (!string.IsNullOrWhiteSpace(orderItem))
+                displayName = $"{displayName} - {orderItem}";
+
+            results.Add(new SpecialOrderOffer(
+                Key: key,
+                DisplayName: displayName,
+                OrderItem: orderItem,
+                RequiredForPerfection: requiredForPerfection,
+                Rank: rank));
+
+            keyQueue.Remove(key);
+            keysIncludingCompleted.Remove(key);
+        }
+
+        return results;
+    }
+
+
+
     private static (string DisplayName, bool RequiredForPerfection, int Rank) GetAugment(
         IReadOnlyDictionary<string, SpecialOrderAugmentDto> augment,
         string key)
@@ -127,52 +241,32 @@ public static class SpecialOrderPredictor
         return (key, false, 0);
     }
 
-    private static bool CanStartOrderNow(
-        string orderId,
-        SpecialOrderDataDto order,
-        string season,
-        int dayOfMonth,
-        bool gingerIslandUnlocked,
-        bool islandResortUnlocked,
-        bool sewingMachineUnlocked,
-        IReadOnlyCollection<string> completedSpecialOrders,
-        IReadOnlyCollection<string> activeSpecialOrders)
-    {
-        // if (!order.Repeatable && completed.Contains(orderId)) return false;
-        if (!order.Repeatable && completedSpecialOrders.Contains(orderId))
-            return false;
+private static bool CanStartOrderNow(
+    string orderId,
+    SpecialOrderDataDto order,
+    int dayOfMonth,
+    TagContext ctx,
+    IReadOnlyCollection<string> activeSpecialOrders)
+{
+    // if (!order.Repeatable && completed.Contains(orderId)) return false;
+    if (!order.Repeatable && ctx.CompletedSpecialOrders.Contains(orderId))
+        return false;
 
-        // if (dayOfMonth >= 16 && order.Duration == Month) return false;
-        if (dayOfMonth >= 16 && string.Equals(order.Duration, "Month", StringComparison.OrdinalIgnoreCase))
-            return false;
+    // if (dayOfMonth >= 16 && order.Duration == Month) return false;
+    if (dayOfMonth >= 16 && string.Equals(order.Duration, "Month", StringComparison.OrdinalIgnoreCase))
+        return false;
 
-        // if (!CheckTags(order.RequiredTags)) return false;
-        if (!CheckTags(
-                order.RequiredTags,
-                season,
-                gingerIslandUnlocked,
-                islandResortUnlocked,
-                sewingMachineUnlocked,
-                completedSpecialOrders))
-            return false;
+    // if (!CheckTags(order.RequiredTags)) return false;
+    if (!CheckTags(order.RequiredTags, ctx))
+        return false;
 
-        // GameStateQuery.CheckConditions(order.Condition) ignored for town orders
-        // (Condition is empty for all OrderType=="" entries in your current json).
+    // foreach (active specialOrders) if (questKey == orderId) return false;
+    if (activeSpecialOrders.Contains(orderId))
+        return false;
 
-        // foreach (active specialOrders) if (questKey == orderId) return false;
-        if (activeSpecialOrders.Contains(orderId))
-            return false;
-
-        return true;
-    }
-
-    private static bool CheckTags(
-        string? tagList,
-        string season,
-        bool gingerIslandUnlocked,
-        bool islandResortUnlocked,
-        bool sewingMachineUnlocked,
-        IReadOnlyCollection<string> completedSpecialOrders)
+    return true;
+}
+    private static bool CheckTags(string? tagList, TagContext ctx)
     {
         if (tagList is null)
             return true;
@@ -189,8 +283,7 @@ public static class SpecialOrderPredictor
                 tag = tag[1..];
             }
 
-            bool actual = CheckTag(
-                tag, season, gingerIslandUnlocked, islandResortUnlocked, sewingMachineUnlocked, completedSpecialOrders);
+            bool actual = CheckTag(tag, ctx);
 
             if (actual != shouldMatch)
                 return false;
@@ -199,31 +292,36 @@ public static class SpecialOrderPredictor
         return true;
     }
 
-    private static bool CheckTag(
-        string tag,
-        string season,
-        bool gingerIslandUnlocked,
-        bool islandResortUnlocked,
-        bool sewingMachineUnlocked,
-        IReadOnlyCollection<string> completedSpecialOrders)
+    private static bool CheckTag(string tag, TagContext ctx)
     {
+        if (tag.StartsWith("rule_", StringComparison.Ordinal))
+        {
+            var rule = tag["rule_".Length..];
+            return ctx.ActiveRules.Contains(rule);
+        }
+
+        if (tag.StartsWith("dropbox_", StringComparison.Ordinal))
+        {
+            var box = tag["dropbox_".Length..];
+            return ctx.ActiveDropBoxes.Contains(box);
+        }
         if (tag == "NOT_IMPLEMENTED")
             return false;
 
         if (tag.StartsWith("season_", StringComparison.Ordinal))
-            return string.Equals(season, tag["season_".Length..], StringComparison.OrdinalIgnoreCase);
+            return string.Equals(ctx.Season, tag["season_".Length..], StringComparison.OrdinalIgnoreCase);
 
         if (tag == "island")
-            return gingerIslandUnlocked;
+            return ctx.GingerIslandUnlocked;
 
         if (tag == "mail_Island_Resort")
-            return islandResortUnlocked;
+            return ctx.IslandResortUnlocked;
 
         if (tag == "event_992559")
-            return sewingMachineUnlocked;
+            return ctx.SewingMachineUnlocked;
 
         if (tag.StartsWith("completed_", StringComparison.Ordinal))
-            return completedSpecialOrders.Contains(tag["completed_".Length..]);
+            return ctx.CompletedSpecialOrders.Contains(tag["completed_".Length..]);
 
         // assume all NPCs are known
         if (tag.StartsWith("knows_", StringComparison.Ordinal))
@@ -232,69 +330,57 @@ public static class SpecialOrderPredictor
         return false;
     }
 
-    private static string? ResolveOrderItem(
-        string orderKey,
-        SpecialOrderDataDto orderData,
-        int generationSeed,
-        string season,
-        bool gingerIslandUnlocked,
-        bool islandResortUnlocked,
-        bool sewingMachineUnlocked,
-        IReadOnlyCollection<string> completedSpecialOrders)
+private static string? ResolveOrderItem(
+    string orderKey,
+    SpecialOrderDataDto orderData,
+    int generationSeed,
+    TagContext ctx)
+{
+    if (orderData.RandomizedElements is null || orderData.RandomizedElements.Count == 0)
+        return null;
+
+    var r = StardewRng.CreateRandom(generationSeed);
+
+    foreach (var element in orderData.RandomizedElements)
     {
-        if (orderData.RandomizedElements is null || orderData.RandomizedElements.Count == 0)
-            return null;
-
-        // Mirrors: Random r = Utility.CreateRandom(generation_seed.Value);
-        var r = StardewRng.CreateRandom(generationSeed);
-
-        foreach (var element in orderData.RandomizedElements)
+        var validIndices = new List<int>();
+        for (int i = 0; i < element.Values.Count; i++)
         {
-            // pick index exactly like the game
-            var validIndices = new List<int>();
-            for (int i = 0; i < element.Values.Count; i++)
-            {
-                if (CheckTags(element.Values[i].RequiredTags, season,
-                        gingerIslandUnlocked, islandResortUnlocked, sewingMachineUnlocked, completedSpecialOrders))
-                    validIndices.Add(i);
-            }
-
-            int selectedIndex = validIndices.Count > 0 ? r.ChooseFrom(validIndices) : 0;
-            if (selectedIndex < 0 || selectedIndex >= element.Values.Count)
-                selectedIndex = 0;
-
-            string value = element.Values[selectedIndex].Value;
-
-            // Case 1: PICK_ITEM <list>
-            if (value.StartsWith("PICK_ITEM", StringComparison.Ordinal))
-            {
-                string list = value.Substring("PICK_ITEM".Length);
-                var options = list.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
-                var chosen = options.Length > 0 ? (r.ChooseFrom(options) ?? "") : "";
-                return string.IsNullOrWhiteSpace(chosen) ? null : chosen;
-            }
-
-            // Case 2: Clint style "Target|Grub|LocalizedName|[...]"
-            if (value.StartsWith("Target|", StringComparison.Ordinal))
-            {
-                var parts = value.Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-                if (parts.Length >= 2)
-                    return parts[1]; // e.g. "Grub"
-            }
-
-            // Case 3: Demetrius2 fish pool "…|Tags|fish_river"
-            if (value.Contains("|Tags|fish_", StringComparison.Ordinal))
-            {
-                if (value.Contains("fish_river", StringComparison.Ordinal)) return "River Fish";
-                if (value.Contains("fish_ocean", StringComparison.Ordinal)) return "Ocean Fish";
-                if (value.Contains("fish_lake", StringComparison.Ordinal)) return "Lake Fish";
-            }
-
-            // Otherwise: ignore (text randomization etc.)
+            if (CheckTags(element.Values[i].RequiredTags, ctx))
+                validIndices.Add(i);
         }
 
-        return null;
+        int selectedIndex = validIndices.Count > 0 ? r.ChooseFrom(validIndices) : 0;
+        if (selectedIndex < 0 || selectedIndex >= element.Values.Count)
+            selectedIndex = 0;
+
+        string value = element.Values[selectedIndex].Value;
+
+        if (value.StartsWith("PICK_ITEM", StringComparison.Ordinal))
+        {
+            string list = value.Substring("PICK_ITEM".Length);
+            var options = list.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+            var chosen = options.Length > 0 ? (r.ChooseFrom(options) ?? "") : "";
+            return string.IsNullOrWhiteSpace(chosen) ? null : chosen;
+        }
+
+        if (value.StartsWith("Target|", StringComparison.Ordinal))
+        {
+            var parts = value.Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            if (parts.Length >= 2)
+                return parts[1];
+        }
+
+        if (value.Contains("|Tags|fish_", StringComparison.Ordinal))
+        {
+            if (value.Contains("fish_river", StringComparison.Ordinal)) return "River Fish";
+            if (value.Contains("fish_ocean", StringComparison.Ordinal)) return "Ocean Fish";
+            if (value.Contains("fish_lake", StringComparison.Ordinal)) return "Lake Fish";
+        }
     }
+
+    return null;
+}
 
     private static (string season, int dayOfMonth, int daysPlayed) MapWeekIndexToRefreshDay(int weekIndex)
     {
@@ -365,11 +451,44 @@ public static class SpecialOrderPredictor
         using var reader = new StreamReader(stream);
         return reader.ReadToEnd();
     }
+
+
+    private static (HashSet<string> activeRules, HashSet<string> activeDropBoxes) ComputeActiveRuleAndDropboxes(
+        IReadOnlyDictionary<string, SpecialOrderDataDto> data,
+        IReadOnlyCollection<string> activeSpecialOrders)
+    {
+        var rules = new HashSet<string>(StringComparer.Ordinal);
+        var dropBoxes = new HashSet<string>(StringComparer.Ordinal);
+
+        foreach (var key in activeSpecialOrders)
+        {
+            if (!data.TryGetValue(key, out var order))
+                continue;
+
+            // SpecialRule: comma-separated list in the data (game treats them as rule IDs).
+            if (!string.IsNullOrWhiteSpace(order.SpecialRule))
+            {
+                foreach (var rule in order.SpecialRule.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries))
+                {
+                    rules.Add(rule);
+                }
+            }
+
+            // DropBox: usually found in objective Data as "DropBox": "QiChallengeBox" etc.
+            if (order.Objectives is not null)
+            {
+                foreach (var obj in order.Objectives)
+                {
+                    if (obj.Data is null)
+                        continue;
+
+                    if (obj.Data.TryGetValue("DropBox", out var box) && !string.IsNullOrWhiteSpace(box))
+                        dropBoxes.Add(box);
+                }
+            }
+        }
+
+        return (rules, dropBoxes);
+    }
 }
 
-public sealed class SpecialOrderAugmentDto
-{
-    public string? DisplayName { get; set; }
-    public bool RequiredForPerfection { get; set; }
-    public int Rank { get; set; }
-}

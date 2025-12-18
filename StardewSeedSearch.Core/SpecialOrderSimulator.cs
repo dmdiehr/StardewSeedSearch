@@ -66,11 +66,14 @@ public static class SpecialOrderSimulator
         var data = _data.Value;
         var augment = _augment.Value;
 
-        // Targets: all orders marked RequiredForPerfection in augment
+        // Targets: all orders marked RequiredForPerfection with the empty ordertype (meaning town orders) in augment
         var perfectionTargets = augment
             .Where(kv => kv.Value.RequiredForPerfection)
             .Select(kv => kv.Key)
-            .ToHashSet();
+            .Where(key =>
+                data.TryGetValue(key, out var d) &&
+                string.IsNullOrWhiteSpace(d.OrderType)) // town board only
+            .ToHashSet(StringComparer.Ordinal);
 
         var completedForGamePool = initialCompletedForGamePool is null
             ? new HashSet<string>()

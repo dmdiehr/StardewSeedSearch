@@ -16,7 +16,26 @@ public sealed class SpecialOrderDataDto
     public string? RequiredTags { get; set; }
     public string? Condition { get; set; }
 
-    public List<RandomizedElementDto>? RandomizedElements { get; set; } // <-- add this
+    public string? SpecialRule { get; set; }                 // <-- add
+    public List<SpecialOrderObjectiveDto>? Objectives { get; set; } // <-- add
+
+    public List<RandomizedElementDto>? RandomizedElements { get; set; }
+}
+
+public sealed class SpecialOrderObjectiveDto
+{
+    public string Type { get; set; } = "";
+    public string Text { get; set; } = "";
+    public string RequiredCount { get; set; } = "";
+    public Dictionary<string, string>? Data { get; set; }
+}
+
+
+public sealed class SpecialOrderAugmentDto
+{
+    public string? DisplayName { get; set; }
+    public bool RequiredForPerfection { get; set; }
+    public int Rank { get; set; }
 }
 
 

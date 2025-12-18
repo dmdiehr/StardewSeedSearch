@@ -14,7 +14,7 @@ public sealed class SpecialOrderSimulator_PrintTests
     [Fact]
     public void Sim_Print_Town_Weeks9To20()
     {
-        ulong gameId = 1001288; // <-- set this
+        ulong gameId = 151; // <-- set this
 
         var schedule = new SpecialOrderSimSchedule();
 
@@ -85,8 +85,8 @@ public sealed class SpecialOrderSimulator_PrintTests
         public void Scan_ConsecutiveSeeds_TownPerfection_Best10_ByWeek28()
         {
             // ---- Configure ----
-            ulong startGameId = 1000000;  // set this
-            int seedCount = 1000000;    // scan this many consecutive seeds
+            ulong startGameId = 100;  // set this
+            int seedCount = 100;    // scan this many consecutive seeds
             int startWeek = 9;
             int capWeek = 20;
 
