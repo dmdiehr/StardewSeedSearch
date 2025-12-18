@@ -108,7 +108,7 @@ private static Weather GetGeneratedWeather(int year, Season season, int dayOfMon
     private static bool RollSyncedRandomDay(int year, Season season, int dayOfMonth, ulong gameId, string key, double chance)
     {
         // Mirrors: SYNCED_RANDOM day <key> <chance>  => random.NextDouble() < chance
-        if (!Helper.TryCreateIntervalRandomForDate(
+        if (!StardewRng.TryCreateIntervalRandomForDate(
                 interval: "day",
                 key: key,
                 gameId: gameId,
