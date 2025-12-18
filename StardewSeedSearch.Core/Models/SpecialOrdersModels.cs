@@ -1,5 +1,5 @@
 
-namespace StardewSeedSearch.Core.SpecialOrders;
+namespace StardewSeedSearch.Core;
 public sealed record SpecialOrderOffer(
     string Key,
     string DisplayName,

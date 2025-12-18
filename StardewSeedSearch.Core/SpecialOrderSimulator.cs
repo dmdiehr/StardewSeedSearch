@@ -1,7 +1,7 @@
 using System.Reflection;
 using System.Text.Json;
 
-namespace StardewSeedSearch.Core.SpecialOrders;
+namespace StardewSeedSearch.Core;
 
 public sealed record SpecialOrderSimSchedule(int GingerIslandUnlockWeek = 11,int IslandResortUnlockWeek = 13,int SewingMachineUnlockWeek = 9)
 {

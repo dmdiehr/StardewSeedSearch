@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using StardewSeedSearch.Core.SpecialOrders;
+using StardewSeedSearch.Core;
 using Xunit;
 using Xunit.Abstractions;
 

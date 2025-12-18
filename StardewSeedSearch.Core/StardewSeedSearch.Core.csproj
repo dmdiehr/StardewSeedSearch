@@ -11,6 +11,9 @@
     <EmbeddedResource Include="Data/RandomBundles.json" />
     <EmbeddedResource Include="Data/SpecialOrders.json" />
     <EmbeddedResource Include="Data/SpecialOrders.augment.json" />
+    <EmbeddedResource Include="Data/Objects.json" />
+    <EmbeddedResource Include="Data/Shops.json" />
+    <EmbeddedResource Include="Data/Furniture.json" />
   </ItemGroup>
 
 

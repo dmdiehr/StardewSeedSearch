@@ -1,7 +1,7 @@
 using System.Reflection;
 using System.Text.Json;
 
-namespace StardewSeedSearch.Core.SpecialOrders;
+namespace StardewSeedSearch.Core;
 
 public static class QiSpecialOrderSimulator
 {
