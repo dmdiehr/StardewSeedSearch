@@ -3,9 +3,14 @@ namespace StardewSeedSearch.Core;
 public static class Helper
 {
 
-    public static long GetDaysPlayed(int year, Season season, int dayOfMonth)
+    public static long GetDaysPlayedZeroBased(int year, Season season, int dayOfMonth)
     {
-        int seasonIndex = season switch
+        return GetDaysPlayedOneBased(year, season, dayOfMonth) - 1;
+    }
+
+    public static long GetDaysPlayedOneBased(int year, Season season, int dayOfMonth)
+    {
+                int seasonIndex = season switch
         {
             Season.Spring => 0,
             Season.Summer => 1,
@@ -14,8 +19,8 @@ public static class Helper
             _ => throw new ArgumentOutOfRangeException(nameof(season))
         };
 
-    // 0-based: Spring 1 Y1 => 0
-    return ((year - 1) * 112L) + (seasonIndex * 28L) + (dayOfMonth - 1);
+        // 01based: Spring 1 Y1 => 1
+        return ((year - 1) * 112L) + (seasonIndex * 28L) + dayOfMonth;
     }
 
     public static string GetSeasonName(Season season) => season switch

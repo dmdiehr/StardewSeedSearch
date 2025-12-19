@@ -130,8 +130,9 @@ private static Weather GetGeneratedWeather(int year, Season season, int dayOfMon
         // random = Utility.CreateDaySaveRandom(hash("summer_rain_chance"));
         // chance = 0.12 + dayOfMonth * 0.003;
         // return random.NextBool(chance);
+        // I don't know why this uses zero-based days played, it might just be that it's actually about the forecast not the actual
 
-        long daysPlayed = Helper.GetDaysPlayed(year, Season.Summer, dayOfMonth);
+        long daysPlayed = Helper.GetDaysPlayedZeroBased(year, Season.Summer, dayOfMonth);
         int seedA = HashUtility.GetDeterministicHashCode("summer_rain_chance");
 
         Random rng = StardewRng.CreateDaySaveRandom(daysPlayed, gameId, seedA);

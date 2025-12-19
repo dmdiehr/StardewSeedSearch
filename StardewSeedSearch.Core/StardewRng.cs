@@ -91,6 +91,8 @@ public static class StardewRng
         return list[rng.Next(list.Count)];
     }
 
+    //TODO, I think this is zero-based because that's how weather predictions work, I don't think it'll work for anything else
+    // Might just want to refactor to make this a weather-specific function before we try to use this for something else
     public static bool TryCreateIntervalRandomForDate(
     string interval,
     string? key,
@@ -112,7 +114,7 @@ public static class StardewRng
                 // MUST match Game1.stats.DaysPlayed for that morning.
                 // In vanilla saves this is almost always “days since start”, 0-based:
                 // Spring 1 Y1 => 0, Spring 2 Y1 => 1, etc.
-                intervalSeed = Helper.GetDaysPlayed(year, season, dayOfMonth);
+                intervalSeed = Helper.GetDaysPlayedZeroBased(year, season, dayOfMonth);
                 break;
 
             case "season":
@@ -139,5 +141,14 @@ public static class StardewRng
         random = StardewRng.CreateRandom(seed, (double)gameId, intervalSeed);
         return true;
     }
+
+    public static Random CreateSyncedDayRandom(ulong gameId, long daysPlayed, string key)
+{
+    int seed = HashUtility.GetDeterministicHashCode(key);
+    // Matches Utility.CreateRandom(seed, uniqueID, daySeed) and stardew-predictor:
+    // new CSRandom(getRandomSeed(getHashFromString(key), gameID, daySeed))
+    return StardewRng.CreateRandom(seed, (double)gameId, (double)daysPlayed);
+}
+
 
 }
