@@ -7,85 +7,21 @@ using System.Text.Json;
 
 namespace StardewSeedSearch.Core;
 
-public sealed class TravelingCartPredictor
+public static class TravelingCartPredictor
 {
-    /// <summary>
-    /// A lightweight representation of Data/Objects.json entries with the fields
-    /// needed for Traveling Cart RANDOM_ITEMS selection and later price/qty logic.
-    /// </summary>
-    public readonly struct RandomObjectCandidate
-    {
-        public RandomObjectCandidate(
-            string key,
-            int id,
-            string name,
-            int price,
-            int category,
-            string type,
-            bool excludeFromRandomSale)
-        {
-            Key = key;
-            Id = id;
-            Name = name;
-            Price = price;
-            Category = category;
-            Type = type;
-            ExcludeFromRandomSale = excludeFromRandomSale;
-        }
 
-        /// <summary>
-        /// The JSON dictionary key (often used as the lookup key in other codebases).
-        /// Kept for debugging and future expansion.
-        /// </summary>
-        public string Key { get; }
+    //Load furntiure data
+    private const string FurnitureResourceName = "StardewSeedSearch.Core.Data.Furniture.json";
+    private static readonly Lazy<IReadOnlyList<FurnitureCandidate>> _furnitureCandidates =
+    new(LoadFurnitureCandidatesPreserveJsonOrder);
 
-        /// <summary>
-        /// The numeric object ID (what the shop constraint "2..789" applies to).
-        /// </summary>
-        public int Id { get; }
 
-        public string Name { get; }
-        public int Price { get; }
-        public int Category { get; }
-        public string Type { get; }
-
-        /// <summary>
-        /// Matches the traveling cart "@isRandomSale" / "ExcludeFromRandomSale" meaning.
-        /// </summary>
-        public bool ExcludeFromRandomSale { get; }
-    }
-
-    /// <summary>
-    /// Output of the random selection step. Price/Quantity are nullable for now
-    /// because this method only selects the 10 random items (not full stock generation).
-    /// </summary>
-    public readonly struct RandomObjectResult
-    {
-        public RandomObjectResult(int id, string name, int basePrice, string key, int? price = null, int? quantity = null)
-        {
-            Id = id;
-            Name = name;
-            BasePrice = basePrice;
-            Key = key;
-            Price = price;
-            Quantity = quantity;
-        }
-
-        public int Id { get; }
-        public string Name { get; }
-        public int BasePrice { get; }
-        public string Key { get; }
-
-        public int? Price { get; }
-        public int? Quantity { get; }
-
-        public override string ToString()
-            => $"{Id} - {Name} (BasePrice={BasePrice}, Key={Key}, Price={(Price?.ToString() ?? "null")}, Qty={(Quantity?.ToString() ?? "null")})";
-    }
-
+    //Load object data
     private const string ObjectsResourceName = "StardewSeedSearch.Core.Data.Objects.json";
     private static readonly Lazy<IReadOnlyList<RandomObjectCandidate>> _objectCandidates =
         new(LoadObjectCandidatesPreserveJsonOrder);
+
+
 
     /// <summary>
     /// Replicates stardew-predictor's getRandomItems(...) behavior for Traveling Cart's 10 random objects:
@@ -93,9 +29,27 @@ public sealed class TravelingCartPredictor
     /// - If ItemIdCheck passes, store candidate in a dictionary keyed by that random key (overwriting on collisions).
     /// - Iterate candidates by ascending key and apply PerItemConditionCheck until 10 items are selected.
     /// </summary>
-    public IReadOnlyList<RandomObjectResult> GetRandomItems(ulong gameId, long daysPlayed)
+    /// 
+    
+    public static TravelingCartStock GetCartStock(ulong gameId, long daysPlayed)
     {
+        // Main cart RNG (gameId/2) — must be the single shared RNG stream
         var rng = StardewRng.CreateDaySaveRandom(daysPlayed, gameId);
+
+        // 10 random objects (selection + price/qty consumes rng)
+        var randomObjects = GetRandomItems(rng);
+
+        // furniture (continues consuming the same rng)
+        var furniture = GetRandomFurniture(rng);
+
+        return new TravelingCartStock(
+            RandomObjects: randomObjects,
+            Furniture: furniture
+        );
+    }
+    public static IReadOnlyList<CartItem> GetRandomItems(Random random)
+    {
+        var rng = random;
 
         // JS uses an object literal shuffledItems[key] = id;
         // That implies:
@@ -113,7 +67,7 @@ public sealed class TravelingCartPredictor
             keyed[key] = candidate; // overwrite on collisions (matches JS object behavior).
         }
 
-        var results = new List<RandomObjectResult>(capacity: 10);
+        var results = new List<CartItem>(capacity: 10);
 
         foreach (int key in keyed.Keys.OrderBy(k => k))
         {
@@ -126,22 +80,51 @@ public sealed class TravelingCartPredictor
                 rng.Next(1, 11) * 100,
                 rng.Next(3, 6) * candidate.Price);
 
-            int computedQty = (rng.NextDouble() < 0.1) ? 5 : 1;    
+            int computedQty = (rng.NextDouble() < 0.1) ? 5 : 1;
 
-            results.Add(new RandomObjectResult(
-                id: candidate.Id,
-                name: candidate.Name,
-                basePrice: candidate.Price,
-                key: candidate.Key,
-                price: computedPrice,
-                quantity: computedQty));
+            results.Add(new CartItem(
+                ItemId: $"(O){candidate.Id}",
+                Name: candidate.Name,
+                Price: computedPrice,
+                Quantity: computedQty));
 
             if (results.Count >= 10)
                 break;
         }
+
         return results;
     }
 
+    public static CartItem GetRandomFurniture(Random cartRng)
+    {
+        var keyed = new Dictionary<int, FurnitureCandidate>(capacity: 2048);
+
+        foreach (var candidate in _furnitureCandidates.Value)
+        {
+            int key = cartRng.Next(); // IMPORTANT: consume once per furniture entry
+            if (!FurnitureItemIdCheck(candidate))
+                continue;
+
+            keyed[key] = candidate; // overwrite on collisions
+        }
+
+        // pick first in ascending key order (howMany = 1, no per-item checks)
+        FurnitureCandidate picked = default;
+        bool found = false;
+
+        foreach (var k in keyed.Keys.OrderBy(k => k))
+        {
+            picked = keyed[k];
+            found = true;
+            break;
+        }
+
+        if (!found)
+            throw new InvalidOperationException("No valid furniture candidates found for traveling cart.");
+
+        int price = cartRng.Next(1, 11) * 250; // MUST be after the furniture pick
+        return new CartItem(ItemId: $"(F){picked.Id}", Name: picked.Name, Price: price, Quantity: 1);
+    }
     private static bool ItemIdCheck(RandomObjectCandidate c)
     {
         // Corresponds to:
@@ -176,13 +159,119 @@ public sealed class TravelingCartPredictor
         return true;
     }
 
+    private static bool FurnitureItemIdCheck(FurnitureCandidate c)
+    {
+        if (c.Id < 0 || c.Id > 1612) return false;
+        if (c.Price == 0) return false;               // @requirePrice
+        if (c.ExcludeFromRandomSale) return false;    // @isRandomSale
+        return true;
+    }
+
+    private static IReadOnlyList<FurnitureCandidate> LoadFurnitureCandidatesPreserveJsonOrder()
+    {
+        string json = ReadEmbeddedJson(FurnitureResourceName);
+
+        using var doc = JsonDocument.Parse(json, new JsonDocumentOptions
+        {
+            AllowTrailingCommas = true,
+            CommentHandling = JsonCommentHandling.Skip
+        });
+
+        if (doc.RootElement.ValueKind != JsonValueKind.Object)
+            throw new InvalidDataException("Furniture.json root must be a JSON object/dictionary.");
+
+        var list = new List<FurnitureCandidate>(capacity: 2048);
+
+        foreach (var prop in doc.RootElement.EnumerateObject())
+        {
+            string key = prop.Name;
+
+            // IMPORTANT: never skip an entry; if id can't parse, force it to fail checks
+            int id = int.TryParse(key, out int parsedId) ? parsedId : int.MinValue;
+
+            string raw = prop.Value.ValueKind == JsonValueKind.String ? (prop.Value.GetString() ?? "") : "";
+
+            // IMPORTANT: never skip an entry; best-effort parse, fallback to "invalid"
+            string name = "";
+            int price = 0;
+            bool exclude = false;
+
+            if (!string.IsNullOrEmpty(raw) && TryParseFurnitureRaw(raw, out var n, out var p, out var ex))
+            {
+                name = n;
+                price = p;
+                exclude = ex;
+            }
+
+            list.Add(new FurnitureCandidate(
+                key: key,
+                id: id,
+                name: name,
+                price: price,
+                excludeFromRandomSale: exclude));
+        }
+
+        return list;
+    }
+
+    private static bool TryParseFurnitureRaw(string raw, out string name, out int price, out bool exclude)
+    {
+        // Example:
+        // "Crystal Chair/chair/-1/-1/4/3000/-1/[LocalizedText ...]///true"
+        // We split on the "///" extension delimiter first.
+        name = "";
+        price = 0;
+        exclude = false;
+
+        string basePart = raw;
+        string? extrasPart = null;
+
+        int extrasIdx = raw.IndexOf("///", StringComparison.Ordinal);
+        if (extrasIdx >= 0)
+        {
+            basePart = raw[..extrasIdx];
+            extrasPart = raw[(extrasIdx + 3)..];
+        }
+
+        // base fields are slash-separated
+        // We only need:
+        //   [0] name
+        //   [5] price  (your observed mapping; matches examples)
+        var parts = basePart.Split('/');
+
+        if (parts.Length < 6)
+            return false;
+
+        name = parts[0];
+
+        // price at index 5 (0-based)
+        if (!int.TryParse(parts[5], out price))
+            price = 0;
+
+        // extras often includes "true" meaning excluded from random sale
+        if (!string.IsNullOrEmpty(extrasPart))
+        {
+            // extras can contain multiple flags separated by "///" in some cases;
+            // we already removed the first delimiter, so split remaining similarly.
+            foreach (var extra in extrasPart.Split(new[] { "///" }, StringSplitOptions.None))
+            {
+                if (extra.Trim().Equals("true", StringComparison.OrdinalIgnoreCase))
+                {
+                    exclude = true;
+                    break;
+                }
+            }
+        }
+
+        return true;
+    }    
     private static IReadOnlyList<RandomObjectCandidate> LoadObjectCandidatesPreserveJsonOrder()
     {
         // IMPORTANT:
         // 1) We must preserve the original JSON property order (to match stardew-predictor's loop order).
         // 2) Dictionary deserialization does not guarantee order; JsonDocument property enumeration does.
 
-        string json = ReadEmbeddedObjectsJson();
+        string json = ReadEmbeddedJson(ObjectsResourceName);
 
 
         using var doc = JsonDocument.Parse(json, new JsonDocumentOptions
@@ -248,23 +337,24 @@ public sealed class TravelingCartPredictor
         return null;
     }
 
-private static string ReadEmbeddedObjectsJson()
-{
-    var asm = typeof(TravelingCartPredictor).Assembly;
-
-    using Stream? stream = asm.GetManifestResourceStream(ObjectsResourceName);
-    if (stream is null)
+    private static string ReadEmbeddedJson(string resourceName)
     {
-        // Helpful crash message if the default namespace differs.
-        var names = asm.GetManifestResourceNames();
-        throw new FileNotFoundException(
-            $"Embedded resource not found: '{ObjectsResourceName}'.\n" +
-            $"Available resources:\n- {string.Join("\n- ", names)}");
-    }
+        var asm = typeof(TravelingCartPredictor).Assembly;
 
-    using var reader = new StreamReader(stream);
-    return reader.ReadToEnd();
-}
+        using Stream? stream = asm.GetManifestResourceStream(resourceName);
+        if (stream is null)
+        {
+            // Helpful crash message if the default namespace differs.
+            var names = asm.GetManifestResourceNames();
+            throw new FileNotFoundException(
+                $"Embedded resource not found: '{resourceName}'.\n" +
+                $"Available resources:\n- {string.Join("\n- ", names)}");
+        }
+
+        using var reader = new StreamReader(stream);
+        return reader.ReadToEnd();
+    }
+    
     private static int? GetInt(JsonElement obj, string name)
     {
         if (!obj.TryGetProperty(name, out var el))
@@ -302,5 +392,18 @@ private static string ReadEmbeddedObjectsJson()
             JsonValueKind.String when bool.TryParse(el.GetString(), out bool v) => v,
             _ => null
         };
+    }
+
+    public static bool TryGetRedFez(ulong gameId, long daysPlayed, out (string itemId, string name, int price, int qty) item)
+    {
+        var rng = StardewRng.CreateSyncedDayRandom(gameId, daysPlayed, "cart_fez");
+        if (rng.NextDouble() < 0.1)
+        {
+            item = ("(H)RedFez", "Red Fez", 8000, 1);
+            return true;
+        }
+
+        item = default;
+        return false;
     }
 }

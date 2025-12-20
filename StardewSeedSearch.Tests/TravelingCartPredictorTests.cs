@@ -1,37 +1,40 @@
-using System;
-using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
+using StardewSeedSearch.Core;
 
-namespace StardewSeedSearch.Core.Tests;
+namespace StardewSeedSearch.Tests;
 
 public sealed class TravelingCartPredictorTests
 {
     private readonly ITestOutputHelper _output;
+    public TravelingCartPredictorTests(ITestOutputHelper output) => _output = output;
 
-    public TravelingCartPredictorTests(ITestOutputHelper output)
+    [Fact]
+    public void PrintCartStock_SmokeTest()
     {
-        _output = output;
+        ulong gameId = 123456;
+        long daysPlayed = 12;
+
+        var stock = TravelingCartPredictor.GetCartStock(gameId, daysPlayed);
+
+        _output.WriteLine("=== Random Objects ===");
+        foreach (var o in stock.RandomObjects)
+            _output.WriteLine($"{o.ItemId} {o.Name} - {o.Price}g x{o.Quantity}");
+
+        _output.WriteLine("=== Furniture ===");
+        _output.WriteLine($"{stock.Furniture.ItemId} {stock.Furniture.Name} - {stock.Furniture.Price}g x{stock.Furniture.Quantity}");
     }
 
     [Fact]
-    public void GetRandomItems_PrintsTenItems()
+    public void TestRedFez()
     {
-        // Replace these with the values you're comparing against stardew-predictor.
         ulong gameId = 123456;
-        long daysPlayed = 7;
+        long  daysPlayed = Helper.GetDaysPlayedOneBased(1, Season.Winter, 14);
+        bool result = false;
 
-        var predictor = new StardewSeedSearch.Core.TravelingCartPredictor();
-        var items = predictor.GetRandomItems(gameId, daysPlayed);
+        if (TravelingCartPredictor.TryGetRedFez(gameId, daysPlayed, out var fez))
+            result = true; 
 
-        _output.WriteLine($"gameId={gameId}, daysPlayed={daysPlayed}");
-        _output.WriteLine($"Selected {items.Count} items:");
-        for (int i = 0; i < items.Count; i++)
-            _output.WriteLine($"{i + 1,2}. {items[i]}");
-
-        Assert.Equal(10, items.Count);
-
-        // Optional: sanity-check the ID constraint you called out (2..789).
-        Assert.All(items, it => Assert.InRange(it.Id, 2, 789));
+        Assert.True(result);
     }
 }
