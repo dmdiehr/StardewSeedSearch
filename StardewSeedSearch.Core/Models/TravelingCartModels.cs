@@ -3,18 +3,28 @@ namespace StardewSeedSearch.Core;
     
 public readonly record struct CartItem(string ItemId, string Name, int Price, int Quantity);
 
+
 public sealed record TravelingCartStock(
-    IReadOnlyList<CartItem> RandomObjects,
-    CartItem Furniture
-    // CartItem? SeasonalSpecial,
-    // CartItem? CoffeeBean,
-    // CartItem? RedFez,
-    // CartItem? Catalogue1,
-    // CartItem? Catalogue2,
-    // CartItem? Catalogue3,
-    // CartItem? TeaSet,
-    // CartItem? SkillBook
+    CartLocation CartLocation,
+    IReadOnlyList<CartItem> RandomItems,
+    CartItem Furniture,
+    CartItem? SeasonalSpecial = null,
+    CartItem? CoffeeBean = null,
+    CartItem? RedFez = null,
+    CartItem? JojaCatalogue = null,
+    CartItem? JunimoCatalogue = null,
+    CartItem? RetroCatalogue = null,
+    CartItem? TeaSet = null,
+    CartItem? SkillBook = null
 );
+
+public enum CartLocation
+{
+    None = 0,
+    Forest = 1,
+    DesertFestival = 2,
+    NightMarket = 3
+}
 
 /// <summary>
 /// A lightweight representation of Data/Objects.json entries with the fields

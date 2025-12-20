@@ -21,35 +21,82 @@ public static class TravelingCartPredictor
     private static readonly Lazy<IReadOnlyList<RandomObjectCandidate>> _objectCandidates =
         new(LoadObjectCandidatesPreserveJsonOrder);
 
-
-
-    /// <summary>
-    /// Replicates stardew-predictor's getRandomItems(...) behavior for Traveling Cart's 10 random objects:
-    /// - Consume rng.Next() once per object in the full Objects.json list (regardless of passing checks).
-    /// - If ItemIdCheck passes, store candidate in a dictionary keyed by that random key (overwriting on collisions).
-    /// - Iterate candidates by ascending key and apply PerItemConditionCheck until 10 items are selected.
-    /// </summary>
-    /// 
-    
-    public static TravelingCartStock GetCartStock(ulong gameId, long daysPlayed)
+    //Book data
+    private static readonly string[] SkillBookNames =
     {
-        // Main cart RNG (gameId/2) — must be the single shared RNG stream
+        "Stardew Valley Almanac",
+        "Bait And Bobber",
+        "Woodcutter's Weekly",
+        "Mining Monthly",
+        "Combat Quarterly"
+    };
+
+    
+    public static TravelingCartStock? GetCartStock(ulong gameId, long daysPlayed, bool communityCenterComplete = false, bool jojaComplete = false)
+    {
+        CartLocation location;
+        if (!IsTravelingCartDay(daysPlayed, out var cartLocation))
+            return null;
+        
+        location = cartLocation;
+
         var rng = StardewRng.CreateDaySaveRandom(daysPlayed, gameId);
 
-        // 10 random objects (selection + price/qty consumes rng)
-        var randomObjects = GetRandomItems(rng);
-
-        // furniture (continues consuming the same rng)
+        var randomObjects = GetRandomItems(rng, out bool seenRareSeed);
         var furniture = GetRandomFurniture(rng);
+        var skillBook = TryGetSkillBook(gameId, daysPlayed, rng);
+
+        var seasonal = GetSeasonalSpecial(gameId, daysPlayed, seenRareSeed, rng);
 
         return new TravelingCartStock(
-            RandomObjects: randomObjects,
-            Furniture: furniture
+            cartLocation,
+            randomObjects,
+            furniture,
+            seasonal,
+            TryGetCoffeeBean(gameId, daysPlayed),
+            TryGetRedFez(gameId, daysPlayed),
+            TryGetJojaCatalogue(gameId, daysPlayed, communityCenterComplete),
+            TryGetJunimoCatalogue(gameId, daysPlayed, communityCenterComplete, jojaComplete),
+            TryGetRetroCatalogue(gameId, daysPlayed),
+            TryGetTeaSet(gameId, daysPlayed),
+            skillBook
         );
     }
-    public static IReadOnlyList<CartItem> GetRandomItems(Random random)
+
+    public static bool IsTravelingCartDay(long daysPlayed, out CartLocation location)
     {
-        var rng = random;
+        int dayOfYear = (int)(daysPlayed % 112); // 0..111
+        int dayOfWeek = (int)(daysPlayed % 7); // 1..7 (Mon..Sun in SDV)
+
+        // Night Market: Winter 15-17 => dayOfYear 98-100
+        if (dayOfYear is >= 98 and <= 100)
+        {
+            location = CartLocation.NightMarket;
+            return true;
+        }
+
+        // Desert Festival: Spring 15-17 => dayOfYear 14-16
+        if (dayOfYear is >= 14 and <= 16)
+        {
+            location = CartLocation.DesertFestival;
+            return true;
+        }
+
+        // Regular Forest Cart: Friday/Sunday (day 5 and 7)
+        if (dayOfWeek is 5 or 7)
+        {
+            location = CartLocation.Forest;
+            return true;
+        }
+
+        location = CartLocation.None;
+        return false;
+    }
+
+    public static IReadOnlyList<CartItem> GetRandomItems(Random cartRng, out bool seenRareSeed)
+    {
+        var rng = cartRng;
+        seenRareSeed = false;
 
         // JS uses an object literal shuffledItems[key] = id;
         // That implies:
@@ -88,6 +135,9 @@ public static class TravelingCartPredictor
                 Price: computedPrice,
                 Quantity: computedQty));
 
+            if (candidate.Id == 347)
+                seenRareSeed = true;
+
             if (results.Count >= 10)
                 break;
         }
@@ -125,6 +175,109 @@ public static class TravelingCartPredictor
         int price = cartRng.Next(1, 11) * 250; // MUST be after the furniture pick
         return new CartItem(ItemId: $"(F){picked.Id}", Name: picked.Name, Price: price, Quantity: 1);
     }
+    
+    public static CartItem? TryGetSkillBook(ulong gameId, long daysPlayed, Random cartRng)
+    {
+        // independent synced RNG determines if a book appears
+        var synced = StardewRng.CreateSyncedDayRandom(gameId, daysPlayed, "travelerSkillBook");
+
+        if (synced.NextDouble() >= 0.05)
+            return null;
+
+        // IMPORTANT: the specific book is chosen using the main cart RNG stream
+        int which = cartRng.Next(SkillBookNames.Length);
+
+        return new CartItem(
+            ItemId: "(O)SkillBook",           // you can refine later to SkillBook_0..4 if desired
+            Name: SkillBookNames[which],
+            Price: 6000,
+            Quantity: 1
+        );
+    }
+
+    public static CartItem? TryGetCoffeeBean(ulong gameId, long daysPlayed)
+    {
+        // Fall/Winter only
+        if (Helper.GetSeasonFromDaysPlayed(daysPlayed) is Season.Spring or Season.Summer)
+            return null;
+
+        return SyncedChance(gameId, daysPlayed, "cart_coffee_bean", 0.25)
+            ? new CartItem("(O)433", "Coffee Bean", 2500, 1)
+            : null;
+    }
+
+    public static CartItem? TryGetRedFez(ulong gameId, long daysPlayed)
+    {
+        return SyncedChance(gameId, daysPlayed, "cart_fez", 0.1)
+            ? new CartItem("(H)RedFez", "Red Fez", 8000, 1)
+            : null;
+    }
+
+    public static CartItem? GetSeasonalSpecial(ulong gameId, long daysPlayed, bool seenRareSeed, Random cartRng)
+    {
+        if (Helper.GetSeasonFromDaysPlayed(daysPlayed) is Season.Spring or Season.Summer)
+        {
+            if (seenRareSeed)
+                return null;
+
+            int qty = (cartRng.NextDouble() < 0.1) ? 5 : 1; // IMPORTANT: uses cartRng
+            return new CartItem("(O)347", "Rare Seed", 1000, qty);
+        }
+
+        // Fall/Winter handled by synced rarecrow:
+        return TryGetRarecrowSnowman(gameId, daysPlayed);
+    }
+    
+    public static CartItem? TryGetRarecrowSnowman(ulong gameId, long daysPlayed)
+    {
+        // Fall/Winter only
+        if (Helper.GetSeasonFromDaysPlayed(daysPlayed) is not (Season.Fall or Season.Winter))
+            return null;
+
+        return SyncedChance(gameId, daysPlayed, "cart_rarecrow", 0.4)
+            ? new CartItem("(BC)136", "Rarecrow (Snowman)", 4000, 1)
+            : null;
+    }
+
+    public static CartItem? TryGetRetroCatalogue(ulong gameId, long daysPlayed)
+    {
+        return SyncedChance(gameId, daysPlayed, "cart_retroCatalogue", 0.1)
+            ? new CartItem("(F)RetroCatalogue", "Retro Catalogue", 110000, 1)
+            : null;
+    }
+
+    public static CartItem? TryGetJojaCatalogue(ulong gameId, long daysPlayed, bool isCommunityCenterComplete)
+    {
+        if (!isCommunityCenterComplete)
+            return null;
+
+        return SyncedChance(gameId, daysPlayed, "cart_jojaCatalogue", 0.1)
+            ? new CartItem("(F)JojaCatalogue", "Joja Catalogue", 30000, 1)
+            : null;
+    }
+
+    public static CartItem? TryGetJunimoCatalogue(ulong gameId, long daysPlayed, bool isCommunityCenterComplete, bool isJojaComplete)
+    {
+        if (!(isCommunityCenterComplete || isJojaComplete))
+            return null;
+
+        return SyncedChance(gameId, daysPlayed, "cart_junimoCatalogue", 0.1)
+            ? new CartItem("(F)JunimoCatalogue", "Junimo Catalogue", 70000, 1)
+            : null;
+    }
+
+    public static CartItem? TryGetTeaSet(ulong gameId, long daysPlayed)
+    {
+        // Year 25+: daysPlayed >= 2688
+        if (daysPlayed < 2688)
+            return null;
+
+        // stardew-predictor’s browse view uses 0.05; its search view had 0.1, but Shops.json says .05
+        return SyncedChance(gameId, daysPlayed, "teaset", 0.05)
+            ? new CartItem("(O)341", "Tea Set", 1000000, 1)
+            : null;
+    }
+
     private static bool ItemIdCheck(RandomObjectCandidate c)
     {
         // Corresponds to:
@@ -317,6 +470,11 @@ public static class TravelingCartPredictor
         return list;
     }
 
+    private static bool SyncedChance(ulong gameId, long daysPlayed, string key, double chance)
+    {
+        var rng = StardewRng.CreateSyncedDayRandom(gameId, daysPlayed, key);
+        return rng.NextDouble() < chance;
+    }
     private static int? TryParseIdFromKey(string key)
     {
         // Some JSON dumps prefix keys with "_" (e.g. "_485").
@@ -394,16 +552,5 @@ public static class TravelingCartPredictor
         };
     }
 
-    public static bool TryGetRedFez(ulong gameId, long daysPlayed, out (string itemId, string name, int price, int qty) item)
-    {
-        var rng = StardewRng.CreateSyncedDayRandom(gameId, daysPlayed, "cart_fez");
-        if (rng.NextDouble() < 0.1)
-        {
-            item = ("(H)RedFez", "Red Fez", 8000, 1);
-            return true;
-        }
 
-        item = default;
-        return false;
-    }
 }

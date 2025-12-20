@@ -32,5 +32,21 @@ public static class Helper
         _ => throw new ArgumentOutOfRangeException(nameof(season))
     };
 
+    public static Season GetSeasonFromDaysPlayed(long daysPlayed)
+    {
+        // SDV: 28 days/season, 4 seasons/year (112 days/year)
+        // daysPlayed is 0-based (Spring 1 Y1 => 0)
+        // season index = (daysPlayed / 28) % 4
+        int seasonIndex = (int)((daysPlayed / 28) % 4);
+
+        return seasonIndex switch
+        {
+            0 => Season.Spring,
+            1 => Season.Summer,
+            2 => Season.Fall,
+            3 => Season.Winter,
+            _ => throw new ArgumentOutOfRangeException(nameof(daysPlayed), daysPlayed, "Invalid season index derived from daysPlayed.")
+        };
+    }
 }
 
