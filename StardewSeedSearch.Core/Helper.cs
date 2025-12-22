@@ -35,9 +35,9 @@ public static class Helper
     public static Season GetSeasonFromDaysPlayed(long daysPlayed)
     {
         // SDV: 28 days/season, 4 seasons/year (112 days/year)
-        // daysPlayed is 0-based (Spring 1 Y1 => 0)
+        // daysPlayed is 1-based (Spring 1 Y1 => 1)
         // season index = (daysPlayed / 28) % 4
-        int seasonIndex = (int)((daysPlayed / 28) % 4);
+        int seasonIndex = (int)(((daysPlayed-1) / 28) % 4);
 
         return seasonIndex switch
         {

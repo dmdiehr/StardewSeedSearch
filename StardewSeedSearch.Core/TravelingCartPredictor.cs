@@ -21,6 +21,9 @@ public static class TravelingCartPredictor
     private static readonly Lazy<IReadOnlyList<RandomObjectCandidate>> _objectCandidates =
         new(LoadObjectCandidatesPreserveJsonOrder);
 
+    internal static IReadOnlyList<RandomObjectCandidate> GetObjectCandidatesForAnalysis()
+    => _objectCandidates.Value;
+
     //Book data
     private static readonly string[] SkillBookNames =
     {
@@ -65,18 +68,18 @@ public static class TravelingCartPredictor
 
     public static bool IsTravelingCartDay(long daysPlayed, out CartLocation location)
     {
-        int dayOfYear = (int)(daysPlayed % 112); // 0..111
-        int dayOfWeek = (int)(daysPlayed % 7); // 1..7 (Mon..Sun in SDV)
+        int dayOfYear = (int)((daysPlayed-1) % 112) + 1; // 1..112
+        int dayOfWeek = (int)((daysPlayed - 1) % 7) + 1; // 1..7
 
-        // Night Market: Winter 15-17 => dayOfYear 98-100
-        if (dayOfYear is >= 98 and <= 100)
+        // Night Market: Winter 15-17
+        if (dayOfYear is >= 99 and <= 101)
         {
             location = CartLocation.NightMarket;
             return true;
         }
 
-        // Desert Festival: Spring 15-17 => dayOfYear 14-16
-        if (dayOfYear is >= 14 and <= 16)
+        // Desert Festival: Spring 15-17
+        if (dayOfYear is >= 15 and <= 17)
         {
             location = CartLocation.DesertFestival;
             return true;
@@ -278,7 +281,7 @@ public static class TravelingCartPredictor
             : null;
     }
 
-    private static bool ItemIdCheck(RandomObjectCandidate c)
+    public static bool ItemIdCheck(RandomObjectCandidate c)
     {
         // Corresponds to:
         // - id is numeric (we store int; invalid parses become <= 0 and fail range)
@@ -297,7 +300,7 @@ public static class TravelingCartPredictor
         return true;
     }
 
-    private static bool PerItemConditionCheck(RandomObjectCandidate c)
+    public static bool PerItemConditionCheck(RandomObjectCandidate c)
     {
         // Matches stardew-predictor's doCategoryChecks:
         // if (category >= 0 || category === -999) continue;
@@ -418,7 +421,7 @@ public static class TravelingCartPredictor
 
         return true;
     }    
-    private static IReadOnlyList<RandomObjectCandidate> LoadObjectCandidatesPreserveJsonOrder()
+    public static IReadOnlyList<RandomObjectCandidate> LoadObjectCandidatesPreserveJsonOrder()
     {
         // IMPORTANT:
         // 1) We must preserve the original JSON property order (to match stardew-predictor's loop order).
@@ -551,6 +554,5 @@ public static class TravelingCartPredictor
             _ => null
         };
     }
-
 
 }

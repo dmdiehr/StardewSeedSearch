@@ -15,9 +15,9 @@ public sealed class TravelingCartPredictorTests
     public void PrintCartStock_SmokeTest()
     {
         ulong gameId = 123456;
-        long  daysPlayed = Helper.GetDaysPlayedOneBased(1, Season.Summer, 19);
+        //long  daysPlayed = Helper.GetDaysPlayedOneBased(2, Season.Spring, 17);
 
-        var stock = TravelingCartPredictor.GetCartStock(gameId, daysPlayed, true);
+        var stock = TravelingCartPredictor.GetCartStock(gameId, 129, true);
 
         _output.WriteLine("");
 
