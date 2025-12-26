@@ -90,3 +90,5 @@ public readonly struct FurnitureCandidate
     public int Price { get; }
     public bool ExcludeFromRandomSale { get; }
 }
+
+public readonly record struct Demand(int DeadlineDaysPlayed, int Quantity, int[] OptionsObjectIds);
