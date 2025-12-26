@@ -175,7 +175,7 @@ public static class SpecialOrderSimulator
         if (targetWeekIndex < 9)
             return false;
 
-        var schedule = new SpecialOrderSimSchedule(); // defaults (never unlock)
+        var schedule = new SpecialOrderSimSchedule(); // defaults
         var sim = SimulateTown(
             gameId: gameId,
             startWeekIndex: 9,
