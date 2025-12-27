@@ -85,105 +85,101 @@ public sealed class TravelingCartSimulatorTests
     }
 
 
-    // [Fact]
-    // public void BulkScanGameGameIds_FindSomeMatches()
-    // {
-    //     // --- demands (exactly your list) ---
-    //     const int Nautilus_Shell = 392;
-    //     const int Holly = 283;
-    //     const int Snow_Yam = 416;
-    //     const int Crocus = 418;
-    //     const int Coffee_Bean = 433;
-    //     const int Autumns_Bounty = 235;
-    //     const int Glazed_Yams = 208;
-    //     const int Green_Tea = 614;
-    //     const int Vegetable_Medley = 200;
-    //     const int Cranberry_Candy = 238;
-    //     const int Grape = 301;
-    //     const int Pink_Cake = 211;
-    //     const int Snail = 721;
-    //     const int Coconut = 88;
-    //     const int Fruit_Salad = 610;
-    //     const int Sunflower = 421;
-    //     const int Fried_Calamari = 202;
-    //     const int Fairy_Rose = 595;
-    //     const int Plum_Pudding = 604;
-    //     const int Red_Cabbage_Seeds = 485;
-    //     const int Red_Cabbage = 266;
-    //     const int Garlic_Seeds = 476;
-    //     const int Garlic = 248;
-    //     const int Rabbits_Foot = 466;
-    //     const int Truffle = 430;
-    //     const int Caviar = 445;
-    //     const int Duck_Feather = 444;
-    //     const int Complete_Breakfast = 201;
-    //     const int Salmon_Dinner = 212;
-    //     const int Hot_Pepper = 260;
+    [Fact]
+    public void BulkScanGameGameIds_FindSomeMatches()
+    {
+        // --- demands (exactly your list) ---
+        const int Nautilus_Shell = 392;
+        const int Holly = 283;
+        const int Snow_Yam = 416;
+        const int Crocus = 418;
+        const int Coffee_Bean = 433;
+        const int Autumns_Bounty = 235;
+        const int Glazed_Yams = 208;
+        const int Green_Tea = 614;
+        const int Vegetable_Medley = 200;
+        const int Cranberry_Candy = 238;
+        const int Grape = 301;
+        const int Pink_Cake = 211;
+        const int Snail = 721;
+        const int Coconut = 88;
+        const int Fruit_Salad = 610;
+        const int Sunflower = 421;
+        const int Fried_Calamari = 202;
+        const int Fairy_Rose = 595;
+        const int Plum_Pudding = 604;
+        const int Red_Cabbage_Seeds = 485;
+        const int Red_Cabbage = 266;
+        const int Garlic_Seeds = 476;
+        const int Garlic = 248;
+        const int Rabbits_Foot = 466;
+        const int Truffle = 430;
+        const int Caviar = 445;
+        const int Duck_Feather = 444;
+        const int Complete_Breakfast = 201;
+        const int Salmon_Dinner = 212;
+        const int Hot_Pepper = 260;
 
-    //     var demands = new[]
-    //     {
-    //         // new Demand(28,  1, new[] { Coffee_Bean }),
-    //         // new Demand(68,  1, new[] { Nautilus_Shell }),
-    //         // // new Demand(68,  1, new[] { Red_Cabbage, Red_Cabbage_Seeds }),
-    //         // // new Demand(68,  1, new[] { Truffle }),
-    //         // new Demand(68,  1, new[] { Rabbits_Foot }),
-    //         // new Demand(68,  1, new[] { Holly }),
-    //         // // new Demand(68,  1, new[] { Crocus }),
-    //         // new Demand(68,  1, new[] { Snow_Yam }),
-    //         // new Demand(68,  1, new[] { Duck_Feather }),
-    //         // // new Demand(68,  1, new[] { Plum_Pudding }),
-    //         // // new Demand(112, 2, new[] { Rabbits_Foot }),
-    //         // // new Demand(112, 2, new[] { Caviar }),
-    //         new Demand(10,  1, new[] { Pink_Cake, Snail, Grape, Cranberry_Candy }),
-    //         new Demand(32,  1, new[] { Fairy_Rose, Pink_Cake, Plum_Pudding }),
-    //         new Demand(26,  1, new[] { Fried_Calamari }),
-    //         // new Demand(7,   1, new[] { Autumns_Bounty, Glazed_Yams, Green_Tea, Hot_Pepper, Vegetable_Medley }),
-    //         // new Demand(84,  1, new[] { Garlic, Garlic_Seeds }),
-    //         new Demand(14,  1, new[] { Coconut, Fruit_Salad, Pink_Cake, Sunflower }),
-    //         // new Demand(40,  1, new[] { Complete_Breakfast, Salmon_Dinner }),
-    //     };
+        var demands = new[]
+        {
+            // new Demand(28,  1, new[] { Coffee_Bean }),
+            new Demand(68,  1, new[] { Nautilus_Shell }),
+            new Demand(68,  1, new[] { Red_Cabbage, Red_Cabbage_Seeds }),
+            // new Demand(68,  1, new[] { Truffle }),
+            // new Demand(68,  1, new[] { Rabbits_Foot }),
+            new Demand(68,  1, new[] { Holly }),
+            new Demand(68,  1, new[] { Crocus }),
+            new Demand(68,  1, new[] { Snow_Yam }),
+            new Demand(68,  1, new[] { Duck_Feather }),
+            new Demand(68,  1, new[] { Plum_Pudding }),
+            // new Demand(112, 2, new[] { Rabbits_Foot }),
+            // new Demand(112, 2, new[] { Caviar }),
+            // new Demand(10,  1, new[] { Pink_Cake, Snail, Grape, Cranberry_Candy }),
+            // new Demand(32,  1, new[] { Fairy_Rose, Pink_Cake, Plum_Pudding }),
+            // new Demand(26,  1, new[] { Fried_Calamari }),
+            // new Demand(7,   1, new[] { Autumns_Bounty, Glazed_Yams, Green_Tea, Hot_Pepper, Vegetable_Medley }),
+            // new Demand(84,  1, new[] { Garlic, Garlic_Seeds }),
+            // new Demand(14,  1, new[] { Coconut, Fruit_Salad, Pink_Cake, Sunflower }),
+            // new Demand(40,  1, new[] { Complete_Breakfast, Salmon_Dinner }),
+        };
 
-    //     var orderedDemands = demands.OrderBy(d => d.DeadlineDaysPlayed).ToArray();
+        var orderedDemands = demands.OrderBy(d => d.DeadlineDaysPlayed).ToArray();
 
-    //     // watched IDs = union of everything referenced
-    //     int[] watched = demands.SelectMany(d => d.OptionsObjectIds).Distinct().ToArray();
+        // watched IDs = union of everything referenced
+        int[] watched = demands.SelectMany(d => d.OptionsObjectIds).Distinct().ToArray();
 
-    //     // --- scan settings ---
-    //     const ulong startGameId = 1;
-    //     const int countToScan = 100000;
-    //     const int maxToPrint = 25;
+        // --- scan settings ---
+        const ulong startGameId = 0;
+        const int countToScan = 1_000;
 
-    //     int matches = 0;
-    //     ulong firstMatch = 0;
+        int matches = 0;
+        ulong firstMatch = 0;
 
-    //     var sw = Stopwatch.StartNew();
+        var sw = Stopwatch.StartNew();
 
-    //     for (ulong gameId = startGameId; gameId < startGameId + (ulong)countToScan; gameId++)
-    //     {
-    //         var plan = CartDemandPlanCompiler.Compile(orderedDemands);
+        for (ulong gameId = startGameId; gameId < startGameId + (ulong)countToScan; gameId++)
+        {
+            var plan = CartDemandPlanCompiler.Compile(orderedDemands);
 
-    //         if (!CartSeedDemandEvaluator.SeedPassesEarlyFeasibilityPruneY1Forest(gameId, plan))
-    //             continue;
+            if (!CartSeedDemandEvaluator.SeedPassesEarlyFeasibilityPruneY1Forest(gameId, plan))
+                continue;
 
-    //         if (CartSeedDemandEvaluator.SeedSatisfiesDemandsY1Forest(gameId, orderedDemands, watched))
-    //         {
-    //             matches++;
-    //             if (firstMatch == 0) firstMatch = gameId;
+            if (CartSeedDemandEvaluator.SeedSatisfiesDemandsY1Forest(gameId, orderedDemands, watched))
+            {
+                matches++;
+                if (firstMatch == 0) firstMatch = gameId;
+            }
+        }
 
-    //             if (matches <= maxToPrint)
-    //                 _output.WriteLine($"MATCH gameId={gameId}");
-    //         }
-    //     }
+        sw.Stop();
 
-    //     sw.Stop();
+        double secs = Math.Max(1e-9, sw.Elapsed.TotalSeconds);
+        double rate = countToScan / secs;
 
-    //     double secs = Math.Max(1e-9, sw.Elapsed.TotalSeconds);
-    //     double rate = countToScan / secs;
-
-    //     _output.WriteLine($"Scanned {countToScan:n0} gameIds starting at {startGameId:n0}");
-    //     _output.WriteLine($"Matches: {matches:n0} (first={firstMatch})");
-    //     _output.WriteLine($"Time: {sw.Elapsed.TotalSeconds:n3}s => {rate:n0} seeds/sec");
-    // }
+        _output.WriteLine($"Scanned {countToScan:n0} gameIds starting at {startGameId:n0}");
+        _output.WriteLine($"Matches: {matches:n0} (first={firstMatch})");
+        _output.WriteLine($"Time: {sw.Elapsed.TotalSeconds:n3}s => {rate:n0} seeds/sec");
+    }
 
     [Fact]
     public void Estimate_PB_given_A_Y1Forest()
@@ -315,8 +311,60 @@ public sealed class TravelingCartSimulatorTests
     [Fact]
     public void Scan1M_Parallel_EarlyPrune()
     {
-        // Build your demands (same as your example)
-        var demands = BuildDemands();
+        // --- demands (exactly your list) ---
+        const int Nautilus_Shell = 392;
+        const int Holly = 283;
+        const int Snow_Yam = 416;
+        const int Crocus = 418;
+        const int Coffee_Bean = 433;
+        const int Autumns_Bounty = 235;
+        const int Glazed_Yams = 208;
+        const int Green_Tea = 614;
+        const int Vegetable_Medley = 200;
+        const int Cranberry_Candy = 238;
+        const int Grape = 301;
+        const int Pink_Cake = 211;
+        const int Snail = 721;
+        const int Coconut = 88;
+        const int Fruit_Salad = 610;
+        const int Sunflower = 421;
+        const int Fried_Calamari = 202;
+        const int Fairy_Rose = 595;
+        const int Plum_Pudding = 604;
+        const int Red_Cabbage_Seeds = 485;
+        const int Red_Cabbage = 266;
+        const int Garlic_Seeds = 476;
+        const int Garlic = 248;
+        const int Rabbits_Foot = 466;
+        const int Truffle = 430;
+        const int Caviar = 445;
+        const int Duck_Feather = 444;
+        const int Complete_Breakfast = 201;
+        const int Salmon_Dinner = 212;
+        const int Hot_Pepper = 260;
+
+        var demands = new[]
+        {
+            // new Demand(28,  1, new[] { Coffee_Bean }),
+            new Demand(68,  1, new[] { Nautilus_Shell }),
+            new Demand(68,  1, new[] { Red_Cabbage, Red_Cabbage_Seeds }),
+            // new Demand(68,  1, new[] { Truffle }),
+            // new Demand(68,  1, new[] { Rabbits_Foot }),
+            new Demand(68,  1, new[] { Holly }),
+            new Demand(68,  1, new[] { Crocus }),
+            new Demand(68,  1, new[] { Snow_Yam }),
+            new Demand(68,  1, new[] { Duck_Feather }),
+            new Demand(68,  1, new[] { Plum_Pudding }),
+            // new Demand(112, 2, new[] { Rabbits_Foot }),
+            // new Demand(112, 2, new[] { Caviar }),
+            // new Demand(10,  1, new[] { Pink_Cake, Snail, Grape, Cranberry_Candy }),
+            // new Demand(32,  1, new[] { Fairy_Rose, Pink_Cake, Plum_Pudding }),
+            // new Demand(26,  1, new[] { Fried_Calamari }),
+            // new Demand(7,   1, new[] { Autumns_Bounty, Glazed_Yams, Green_Tea, Hot_Pepper, Vegetable_Medley }),
+            // new Demand(84,  1, new[] { Garlic, Garlic_Seeds }),
+            // new Demand(14,  1, new[] { Coconut, Fruit_Salad, Pink_Cake, Sunflower }),
+            // new Demand(40,  1, new[] { Complete_Breakfast, Salmon_Dinner }),
+        };
 
         // Pre-sort once (VERY important)
         var demandsSorted = demands.OrderBy(d => d.DeadlineDaysPlayed).ToArray();
@@ -325,7 +373,7 @@ public sealed class TravelingCartSimulatorTests
         var watched = demandsSorted.SelectMany(d => d.OptionsObjectIds).Distinct().ToArray();
 
         const ulong startId = 1UL;
-        const int count = 1_000_000;
+        const int count = 100_000;
         const int maxHitsToCollect = 1000; // keep small so collection overhead stays tiny
 
         var hits = new ConcurrentBag<ulong>();
@@ -380,9 +428,6 @@ public sealed class TravelingCartSimulatorTests
         _output.WriteLine($"Scanned {count:n0} seeds in {sw.Elapsed.TotalSeconds:n3}s");
         _output.WriteLine($"Rate: {count / sw.Elapsed.TotalSeconds:n0} seeds/sec (parallel)");
         _output.WriteLine($"Survivors collected: {hits.Count}");
-
-        foreach (var id in hits.OrderBy(x => x).Take(maxHitsToCollect))
-            _output.WriteLine($"  survivor: {id}");
     }
 
     private static Demand[] BuildDemands()

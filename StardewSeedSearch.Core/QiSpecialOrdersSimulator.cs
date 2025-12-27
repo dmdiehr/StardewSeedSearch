@@ -103,11 +103,75 @@ public static class QiSpecialOrderSimulator
         return new QiSimResult(weeks, doneWeek, doneDaysPlayed);
     }
 
-    public static bool CanCompleteQiPerfectionByWeek(ulong gameId, int targetWeekIndex, int startWeekIndex = 14)
+    public static bool CanCompleteQiPerfectionByWeek(
+        ulong gameId,
+        int targetWeekIndex,
+        int startWeekIndex = 14)
     {
-        var sim = Simulate(gameId, startWeekIndex, targetWeekIndex, schedule: null);
-        return sim.PerfectionCompletedWeekIndex is int w && w <= targetWeekIndex;
+        if (targetWeekIndex < startWeekIndex)
+            return false;
+
+        var schedule = new SpecialOrderSimSchedule(); // your defaults
+        var data = _data.Value;
+
+        var completedQiPerfection = new HashSet<string>(StringComparer.Ordinal);
+        var active = new List<ActiveQi>(8);
+        var activeKeys = new HashSet<string>(StringComparer.Ordinal);
+
+        for (int week = startWeekIndex; week <= targetWeekIndex; week++)
+        {
+            var (yearIndex, seasonIndex, season, dayOfMonth, mondayDaysPlayed) = WeekIndexToMonday(week);
+            _ = season; _ = dayOfMonth;
+
+            // Expire + complete
+            for (int i = active.Count - 1; i >= 0; i--)
+            {
+                var a = active[i];
+                if (a.ExpiresOnDaysPlayed <= mondayDaysPlayed)
+                {
+                    active.RemoveAt(i);
+                    activeKeys.Remove(a.Key);
+
+                    // either-or completion
+                    if (a.Key is "QiChallenge9" or "QiChallenge10")
+                    {
+                        completedQiPerfection.Add("QiChallenge9");
+                        completedQiPerfection.Add("QiChallenge10");
+                    }
+                }
+            }
+
+            // Done?
+            if (completedQiPerfection.Contains("QiChallenge9") || completedQiPerfection.Contains("QiChallenge10"))
+                return true;
+
+            bool gingerIsland = schedule.GingerIslandUnlocked(week);
+            bool resort = schedule.IslandResortUnlocked(week);
+            bool sewing = schedule.SewingMachineUnlocked(week);
+
+            var offers = SpecialOrderPredictor.GetQiOrders(
+                gameId: gameId,
+                weekIndex: week,
+                gingerIslandUnlocked: gingerIsland,
+                islandResortUnlocked: resort,
+                sewingMachineUnlocked: sewing,
+                completedSpecialOrders: Array.Empty<string>(),
+                activeSpecialOrders: activeKeys);
+
+            // Choose one
+            var chosen = ChooseQiOffer(offers, completedQiPerfection);
+            if (chosen is not null)
+            {
+                int expiry = ComputeExpiryDaysPlayed(chosen.Key, data, yearIndex, seasonIndex, mondayDaysPlayed);
+
+                if (activeKeys.Add(chosen.Key))
+                    active.Add(new ActiveQi(chosen.Key, expiry));
+            }
+        }
+
+        return false;
     }
+
 
     private static bool IsQiPerfectionSatisfied(HashSet<string> completedQiPerfection)
     {

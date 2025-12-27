@@ -168,23 +168,83 @@ public static class SpecialOrderSimulator
         );
     }
 
-    public static bool CanCompleteTownPerfectionByWeek(
+public static bool CanCompleteTownPerfectionByWeek(
     ulong gameId,
     int targetWeekIndex)
+{
+    if (targetWeekIndex < 9)
+        return false;
+
+    var schedule = new SpecialOrderSimSchedule(); // your defaults
+
+    var data = _data.Value;
+    var augment = _augment.Value;
+
+    // Only perfection targets that are actually town-board orders (OrderType == "")
+    // (prevents Qi flags from impacting town sim).
+    var perfectionTargets = augment
+        .Where(kv => kv.Value.RequiredForPerfection)
+        .Select(kv => kv.Key)
+        .Where(key =>
+            data.TryGetValue(key, out var d) &&
+            string.IsNullOrWhiteSpace(d.OrderType))
+        .ToHashSet(StringComparer.Ordinal);
+
+    var completedForGamePool = new HashSet<string>(StringComparer.Ordinal);
+    var completedPerfection = new HashSet<string>(StringComparer.Ordinal);
+
+    var active = new List<SpecialOrderActive>(8);
+    var activeKeys = new HashSet<string>(StringComparer.Ordinal);
+
+    for (int week = 9; week <= targetWeekIndex; week++)
     {
-        if (targetWeekIndex < 9)
-            return false;
+        var (yearIndex, seasonIndex, season, dayOfMonth, mondayDaysPlayed) = WeekIndexToMonday(week);
 
-        var schedule = new SpecialOrderSimSchedule(); // defaults
-        var sim = SimulateTown(
+        // Expire + complete
+        for (int i = active.Count - 1; i >= 0; i--)
+        {
+            var a = active[i];
+            if (a.ExpiresOnDaysPlayed <= mondayDaysPlayed)
+            {
+                active.RemoveAt(i);
+                activeKeys.Remove(a.Key);
+
+                ApplyCompletion(a.Key, data, augment, completedForGamePool, completedPerfection);
+            }
+        }
+
+        // Check completion milestone (same semantics as your SimulateTown)
+        if (perfectionTargets.Count > 0 && perfectionTargets.All(completedPerfection.Contains))
+            return true;
+
+        // Predict offers for this week
+        bool gingerIsland = schedule.GingerIslandUnlocked(week);
+        bool resort = schedule.IslandResortUnlocked(week);
+        bool sewing = schedule.SewingMachineUnlocked(week);
+
+        var offers = SpecialOrderPredictor.GetTownOrders(
             gameId: gameId,
-            startWeekIndex: 9,
-            endWeekIndex: targetWeekIndex,
-            schedule: schedule);
+            weekIndex: week,
+            gingerIslandUnlocked: gingerIsland,
+            islandResortUnlocked: resort,
+            sewingMachineUnlocked: sewing,
+            completedSpecialOrders: completedForGamePool,
+            activeSpecialOrders: activeKeys);
 
-        return sim.PerfectionCompletedWeekIndex.HasValue
-            && sim.PerfectionCompletedWeekIndex.Value <= targetWeekIndex;
+        // Choose ONE (same policy as SimulateTown)
+        var chosen = ChooseOffer(offers, completedPerfection);
+        if (chosen is not null)
+        {
+            int expiry = ComputeExpiryDaysPlayed(
+                chosen.Key, data, yearIndex, seasonIndex, mondayDaysPlayed);
+
+            if (activeKeys.Add(chosen.Key))
+                active.Add(new SpecialOrderActive(chosen.Key, expiry));
+        }
     }
+
+    return false;
+}
 
 
     private static void ExpireAndComplete(
