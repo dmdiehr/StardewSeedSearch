@@ -26,7 +26,6 @@ public static class OptionalCartBonusDefaults
 
     private static readonly int[] LewisBday =
     {
-        /* Autumns_Bounty */ 235,
         /* Glazed_Yams */ 208,
         /* Green_Tea */ 614,
         /* Hot_Pepper */ 260,
@@ -45,9 +44,7 @@ public static class OptionalCartBonusDefaults
         new Demand(10,  1, VincentBday),
         new Demand(32,  1, JasBday),
         new Demand(7,   1, LewisBday),
-        new Demand(40,  1, AlexBday),
         new Demand(112, 2, RabbitsFoot),
-        new Demand(112, 1, Caviar)
     };
 
     public static string FormatOptionalCartMask(ushort mask)
@@ -61,9 +58,7 @@ public static class OptionalCartBonusDefaults
             "Vincent Birthday",
             "Jas Birthday",
             "Lewis Birthday",
-            "Alex Birthday",
             "Rabbit's Foot",
-            "Caviar"
         };
 
         var parts = new System.Collections.Generic.List<string>(names.Length);

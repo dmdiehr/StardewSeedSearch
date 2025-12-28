@@ -492,7 +492,6 @@ public static class SeedSearchPipeline
         private static readonly int[] HaleyBday =
         {
             /* Coconut */ 88,
-            /* Fruit_Salad */ 610,
             /* Sunflower */ 421
         };
 

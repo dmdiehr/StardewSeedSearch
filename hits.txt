@@ -1,8 +1,6 @@
 1253701257	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Vincent Birthday, Jas Birthday, Lewis Birthday, Alex Birthday, Caviar
 1606571141	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Coffee Bean, Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
 3233275074	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
-3271077974	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Coffee Bean, Vincent Birthday, Jas Birthday, Lewis Birthday, Caviar
-3483387920	Score=9	Weather=[lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Coffee Bean, Vincent Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
 2427503787	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Coffee Bean, Vincent Birthday, Lewis Birthday, Alex Birthday, Caviar
 3233275074	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
 3271077974	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Coffee Bean, Vincent Birthday, Jas Birthday, Lewis Birthday, Caviar

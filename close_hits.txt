@@ -1,0 +1,14 @@
+10005340659	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Vincent Birthday, Jas Birthday, Lewis Birthday
+10011670975	Score=6	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	Cart=Jas Birthday, Lewis Birthday, Rabbit's Foot
+10069459886	Score=6	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Jas Birthday, Rabbit's Foot
+10100845811	Score=6	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Jas Birthday, Rabbit's Foot
+10172780618	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Coffee Bean, Jas Birthday, Rabbit's Foot
+10280075469	Score=6	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Coffee Bean, Vincent Birthday, Jas Birthday
+10376374467	Score=6	Weather=[lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Vincent Birthday, Jas Birthday, Rabbit's Foot
+10565561781	Score=6	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	Cart=Coffee Bean, Vincent Birthday, Jas Birthday
+10644034385	Score=6	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	Cart=Vincent Birthday, Jas Birthday, Rabbit's Foot
+10646850433	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Vincent Birthday, Jas Birthday, Lewis Birthday
+10687061667	Score=6	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Coffee Bean, Vincent Birthday
+10774485850	Score=6	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Jas Birthday, Rabbit's Foot
+10852647475	Score=6	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	Cart=Coffee Bean, Vincent Birthday, Lewis Birthday
+10922383008	Score=6	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Coffee Bean, Jas Birthday

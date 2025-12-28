@@ -11,12 +11,12 @@ internal static class Program
 {
     private static async Task<int> Main(string[] args)
     {
-        ulong start = GetUlong(args, "--start", 6_000_000_000);
-        ulong end = GetUlong(args, "--end", 7_000_000_000);
+        ulong start = GetUlong(args, "--start", 10_000_000_000);
+        ulong end = GetUlong(args, "--end", 11_000_000_000);
         ulong chunk = GetUlong(args, "--chunk", 1_000_000);
         
-        int minScore = GetInt(args, "--minScore", 9);
-        string outPath = GetString(args, "--out", "hits.txt");
+        int minScore = GetInt(args, "--minScore", 6);
+        string outPath = GetString(args, "--out", "close_hits.txt");
 
         int threads = GetInt(args, "--threads", 0); // 0 => all cores
 
