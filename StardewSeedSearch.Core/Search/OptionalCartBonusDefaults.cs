@@ -10,7 +10,6 @@ public static class OptionalCartBonusDefaults
     private static readonly int[] CoffeeBean = { /* Coffee_Bean */ 433 };
     private static readonly int[] RabbitsFoot = { /* Rabbits_Foot */ 446 };
     private static readonly int[] Caviar = { /* Caviar */ 445 };
-
     private static readonly int[] VincentBday =
     {
         /* Snail */ 721,
@@ -21,11 +20,9 @@ public static class OptionalCartBonusDefaults
     private static readonly int[] JasBday =
     {
         /* Fairy_Rose */ 595,
-        /* Pink_Cake */ 221,
+        /* Pink_Cake */ 221, 
         /* Plum_Pudding */ 604
     };
-
-    private static readonly int[] PierreBday = { /* Fried_Calamari */ 202 };
 
     private static readonly int[] LewisBday =
     {
@@ -34,13 +31,6 @@ public static class OptionalCartBonusDefaults
         /* Green_Tea */ 614,
         /* Hot_Pepper */ 260,
         /* Vegetable_Medley */ 200
-    };
-
-    private static readonly int[] HaleyBday =
-    {
-        /* Coconut */ 88,
-        /* Fruit_Salad */ 610,
-        /* Sunflower */ 421
     };
 
     private static readonly int[] AlexBday =
@@ -56,7 +46,7 @@ public static class OptionalCartBonusDefaults
         new Demand(32,  1, JasBday),
         new Demand(7,   1, LewisBday),
         new Demand(40,  1, AlexBday),
-        new Demand(112, 1, RabbitsFoot),
+        new Demand(112, 2, RabbitsFoot),
         new Demand(112, 1, Caviar)
     };
 

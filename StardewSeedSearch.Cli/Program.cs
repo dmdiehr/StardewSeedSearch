@@ -11,12 +11,12 @@ internal static class Program
 {
     private static async Task<int> Main(string[] args)
     {
-        ulong start = GetUlong(args, "--start", 3_030_000_000);
-        ulong end = GetUlong(args, "--end", 6_000_000_000);
+        ulong start = GetUlong(args, "--start", 6_000_000_000);
+        ulong end = GetUlong(args, "--end", 7_000_000_000);
         ulong chunk = GetUlong(args, "--chunk", 1_000_000);
-
-        int minScore = GetInt(args, "--minScore", 7);
-        string outPath = GetString(args, "--out", "tight_hits.txt");
+        
+        int minScore = GetInt(args, "--minScore", 9);
+        string outPath = GetString(args, "--out", "hits.txt");
 
         int threads = GetInt(args, "--threads", 0); // 0 => all cores
 
@@ -57,7 +57,7 @@ internal static class Program
                     // If you do, you can format it however you like:
                     string optional = OptionalCartBonusDefaults.FormatOptionalCartMask(cand.OptionalCartMask);
 
-                    await sw.WriteLineAsync($"{cand.GameId}\tScore={cand.Score}\tWeather=[{weather}]\tOptionalCartMask={optional}")
+                    await sw.WriteLineAsync($"{cand.GameId}\tScore={cand.Score}\tWeather=[{weather}]\tCart={optional}")
                             .ConfigureAwait(false);
 
                     Interlocked.Increment(ref hitsWritten);

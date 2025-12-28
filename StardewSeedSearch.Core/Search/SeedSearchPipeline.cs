@@ -1,9 +1,5 @@
-using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace StardewSeedSearch.Core.Search;
 
@@ -38,93 +34,7 @@ public static class SeedSearchPipeline
                 for (long s = range.Item1; s < range.Item2; s++)
                 {
                     ulong gameId = unchecked((ulong)s);
-                    state.ResetPerSeed();
-                    state.Scanned++;
-
-                    // ---- Stage 1: bundle tracked items ----
-                    if (!config.BundleTryScan(gameId, state.BundleItems, out int foundCount, out bool disq))
-                    {
-                        // Treat scan failure as disqualified for now (or throw if you prefer)
-                        state.BundleDisqualified++;
-                        continue;
-                    }
-
-                    if (disq)
-                    {
-                        state.BundleDisqualified++;
-                        continue;
-                    }
-
-                    // ---- Stage 2: orders gate ----
-                    if (!config.CanCompleteTownPerfectionByWeek(gameId, config.TargetWeekIndexTown)
-                        || !config.CanCompleteQiPerfectionByWeek(gameId, config.TargetWeekIndexQi, config.StartWeekIndexQi))
-                    {
-                        state.OrdersFailed++;
-                        continue;
-                    }
-
-                    // ---- Stage 3: build hard demands (always + tracked items) ----
-                    BuildHardDemandsAndWatched(
-                        config,
-                        state,
-                        state.BundleItems,
-                        foundCount);
-
-                    // ---- Stage 4: cart hard requirements ----
-                    if (state.HardDemandsCount == 0)
-                    {
-                        // No demands means cart passes
-                    }
-                    else if (state.HardWatchedCount == 0)
-                    {
-                        state.CartFailed++;
-                        continue;
-                    }
-                    else
-                    {
-                        // Provide a count-limited IReadOnlyList view without allocations
-                        state.HardDemandsView.Count = state.HardDemandsCount;
-
-                        var watchedSpan = state.HardWatchedIdsArray.AsSpan(0, state.HardWatchedCount);
-
-                        if (!Core.CartSeedDemandEvaluator.SeedSatisfiesDemandsY1Forest(
-                                gameId,
-                                state.HardDemandsView,
-                                watchedSpan))
-                        {
-                            state.CartFailed++;
-                            continue;
-                        }
-                    }
-
-                    // ---- Hard passed ----
-                    state.HardPassed++;
-
-                    // ---- Candidate-only scoring ----
-                    byte weatherMask;
-                    int weatherScore = WeatherScoring.ScoreWeatherY1(gameId, out weatherMask);
-
-                    ushort optionalCartMask;
-                    int optionalCartScore = ScoreOptionalCart(
-                        gameId,
-                        config.OptionalBonusDemands,
-                        state,
-                        out optionalCartMask);
-
-                    int totalScore = weatherScore + optionalCartScore;
-
-
-                    var cand = new SeedCandidate(
-                        GameId: gameId,
-                        Score: totalScore,
-                        WeatherMask: weatherMask,
-                        OptionalCartMask: optionalCartMask);
-
-                    // Record to CLI output (only if score >= threshold)
-                    RecordIfQualifies(config, cand);
-
-                    // Keep TopK too if you still want it (optional)
-                    state.TopK.TryAdd(cand);
+                    ProcessOneSeed(gameId, config, state);
                 }
 
                 return state;
@@ -154,7 +64,152 @@ public static class SeedSearchPipeline
             TopCandidates: globalTopK.ToSortedListDesc());
     }
 
-    // -------------------- hard demand builder (draft) --------------------
+    /// <summary>
+    /// Overload for rescoring/retsting a specific set of game IDs.
+    /// Note: must take an array/list (not ReadOnlySpan) because Parallel.ForEach captures it in lambdas.
+    /// </summary>
+    public static SeedSearchResult ScanRange(IReadOnlyList<ulong> gameIds, SeedSearchConfig config)
+    {
+        if (gameIds is null) throw new ArgumentNullException(nameof(gameIds));
+
+        var sw = Stopwatch.StartNew();
+
+        long scanned = 0;
+        long bundleDisqualified = 0;
+        long ordersFailed = 0;
+        long cartFailed = 0;
+        long hardPassed = 0;
+
+        var globalTopK = new TopK(config.TopK);
+
+        var po = new ParallelOptions { MaxDegreeOfParallelism = config.MaxDegreeOfParallelism };
+
+        Parallel.ForEach(
+            Partitioner.Create(0, gameIds.Count, config.PartitionSize),
+            po,
+            () => new WorkerState(config),
+            (range, _, state) =>
+            {
+                for (int i = range.Item1; i < range.Item2; i++)
+                {
+                    ProcessOneSeed(gameIds[i], config, state);
+                }
+
+                return state;
+            },
+            state =>
+            {
+                Interlocked.Add(ref scanned, state.Scanned);
+                Interlocked.Add(ref bundleDisqualified, state.BundleDisqualified);
+                Interlocked.Add(ref ordersFailed, state.OrdersFailed);
+                Interlocked.Add(ref cartFailed, state.CartFailed);
+                Interlocked.Add(ref hardPassed, state.HardPassed);
+
+                globalTopK.MergeFrom(state.TopK);
+
+                state.Dispose();
+            });
+
+        sw.Stop();
+
+        return new SeedSearchResult(
+            Elapsed: sw.Elapsed,
+            SeedsScanned: scanned,
+            BundleDisqualified: bundleDisqualified,
+            OrdersFailed: ordersFailed,
+            CartFailed: cartFailed,
+            HardPassed: hardPassed,
+            TopCandidates: globalTopK.ToSortedListDesc());
+    }
+
+    private static void ProcessOneSeed(ulong gameId, SeedSearchConfig config, WorkerState state)
+    {
+        state.ResetPerSeed();
+        state.Scanned++;
+
+        // ---- Stage 1: bundle tracked items ----
+        if (!config.BundleTryScan(gameId, state.BundleItems, out int foundCount, out bool disq))
+        {
+            // Treat scan failure as disqualified for now (or throw if you prefer)
+            state.BundleDisqualified++;
+            return;
+        }
+
+        if (disq)
+        {
+            state.BundleDisqualified++;
+            return;
+        }
+
+        // ---- Stage 2: orders gate ----
+        if (!config.CanCompleteTownPerfectionByWeek(gameId, config.TargetWeekIndexTown)
+            || !config.CanCompleteQiPerfectionByWeek(gameId, config.TargetWeekIndexQi, config.StartWeekIndexQi))
+        {
+            state.OrdersFailed++;
+            return;
+        }
+
+        // ---- Stage 3: build hard demands (always + tracked items) ----
+        BuildHardDemandsAndWatched(
+            config,
+            state,
+            state.BundleItems,
+            foundCount);
+
+        // ---- Stage 4: cart hard requirements ----
+        if (state.HardDemandsCount != 0)
+        {
+            if (state.HardWatchedCount == 0)
+            {
+                state.CartFailed++;
+                return;
+            }
+
+            // Provide a count-limited IReadOnlyList view without allocations
+            state.HardDemandsView.Count = state.HardDemandsCount;
+
+            var watchedSpan = state.HardWatchedIdsArray.AsSpan(0, state.HardWatchedCount);
+
+            if (!Core.CartSeedDemandEvaluator.SeedSatisfiesDemandsY1Forest(
+                    gameId,
+                    state.HardDemandsView,
+                    watchedSpan))
+            {
+                state.CartFailed++;
+                return;
+            }
+        }
+
+        // ---- Hard passed ----
+        state.HardPassed++;
+
+        // ---- Candidate-only scoring ----
+        byte weatherMask;
+        int weatherScore = WeatherScoring.ScoreWeatherY1(gameId, out weatherMask);
+
+        ushort optionalCartMask;
+        int optionalCartScore = ScoreOptionalCart(
+            gameId,
+            config.OptionalBonusDemands,
+            state,
+            out optionalCartMask);
+
+        int totalScore = weatherScore + optionalCartScore;
+
+        var cand = new SeedCandidate(
+            GameId: gameId,
+            Score: totalScore,
+            WeatherMask: weatherMask,
+            OptionalCartMask: optionalCartMask);
+
+        // Record to CLI output (only if score >= threshold)
+        RecordIfQualifies(config, cand);
+
+        // Keep TopK too if you still want it (optional)
+        state.TopK.TryAdd(cand);
+    }
+
+    // -------------------- hard demand builder --------------------
 
     private static void BuildHardDemandsAndWatched(
         SeedSearchConfig cfg,
@@ -255,20 +310,18 @@ public static class SeedSearchPipeline
         public int HardDemandsBufferSize { get; init; } = 128;
         public int HardWatchedIdsBufferSize { get; init; } = 256;
 
-
         public required BundleScannerTryScan BundleTryScan { get; init; }
 
         public required Func<ulong, int, bool> CanCompleteTownPerfectionByWeek { get; init; }
         public required Func<ulong, int, int, bool> CanCompleteQiPerfectionByWeek { get; init; }
 
         /// <summary>
-        /// Hard demands that are always present for every seed (optional; may be empty/null).
+        /// Hard demands that are always present for every seed.
         /// These should have stable OptionsObjectIds arrays (no per-seed allocations).
         /// </summary>
         public Core.Demand[] AlwaysHardDemands { get; init; } = HardDemandDefaults.AlwaysHardDemands;
 
         public Core.Demand[] OptionalBonusDemands { get; init; } = OptionalCartBonusDefaults.OptionalBonusDemands;
-
     }
 
     public readonly record struct SeedCandidate(
@@ -325,7 +378,7 @@ public static class SeedSearchPipeline
             HardDemandsView = new DemandBufferView(HardDemandsArray);
 
             TopK = new TopK(cfg.TopK);
-          
+
             CompositesBuffer = System.Buffers.ArrayPool<ulong>.Shared.Rent(Core.TravelingCartSimulator.Candidates.Count);
             SingleDemand = new SingleDemandView();
         }
@@ -334,14 +387,12 @@ public static class SeedSearchPipeline
         {
             HardDemandsCount = 0;
             HardWatchedCount = 0;
-            // Bundle items overwritten by scanner; no need to clear
         }
 
         public void Dispose()
         {
             System.Buffers.ArrayPool<ulong>.Shared.Return(CompositesBuffer, clearArray: false);
         }
-
     }
 
     // Count-limited IReadOnlyList view over a Demand[] (allocated once per thread)
@@ -442,12 +493,10 @@ public static class SeedSearchPipeline
         {
             /* Coconut */ 88,
             /* Fruit_Salad */ 610,
-            /* Pink_Cake */ 221,
             /* Sunflower */ 421
         };
 
         private static readonly int[] PierreBday = { /* Fried_Calamari */ 202 };
-
 
         public static readonly Demand[] AlwaysHardDemands =
         {
@@ -509,7 +558,7 @@ public static class SeedSearchPipeline
 
         return score;
     }
-    
+
     private static void RecordIfQualifies(SeedSearchConfig cfg, in SeedCandidate cand)
     {
         if (cand.Score < cfg.MinScoreToRecord) return;
