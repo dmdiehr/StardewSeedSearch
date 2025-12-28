@@ -53,9 +53,9 @@ public sealed class RemixedBundleTrackedItemsScannerTests
     [Fact]
     public void Perf_ScanSeeds_PerSecond()
     {
-        const ulong startSeed = 1_000_000UL;
-        const int warmup = 50_000;
-        const int n = 500_000;
+        const ulong startSeed = 1;
+        const int warmup = 1_000;
+        const int n = 5_000_000;
 
         Warmup(startSeed, warmup);
 

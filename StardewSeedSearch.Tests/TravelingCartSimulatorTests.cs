@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
 using StardewSeedSearch.Core;
+
 namespace StardewSeedSearch.Tests;
 
 public sealed class TravelingCartSimulatorTests

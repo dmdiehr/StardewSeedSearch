@@ -19,7 +19,7 @@ public sealed class OrdersSimulatorPerfomanceTests
     {
         // ----------------- CONFIG -----------------
         ulong startGameId = 0;          // set this
-        long seedCount = 5_000_000;     // adjust (start smaller, then increase)
+        long seedCount = 1_000_000;     // adjust (start smaller, then increase)
         const int targetWeek = 18;
 
         // Parallel settings

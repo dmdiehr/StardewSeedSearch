@@ -1,0 +1,359 @@
+3061627014	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Haley Birthday, Alex Birthday
+3070817960	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Pierre Birthday, Haley Birthday, Alex Birthday
+3112254142	Score=9	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Pierre Birthday, Lewis Birthday, Haley Birthday, Alex Birthday
+3192936026	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Pierre Birthday, Lewis Birthday, Haley Birthday, Alex Birthday
+3233275074	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Pierre Birthday, Lewis Birthday, Haley Birthday, Alex Birthday
+3271077974	Score=10	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Pierre Birthday, Lewis Birthday, Haley Birthday
+3272787753	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Haley Birthday, Alex Birthday
+3357424947	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Pierre Birthday, Alex Birthday
+3453597483	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Pierre Birthday, Alex Birthday
+3483387920	Score=9	Weather=[lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Pierre Birthday, Lewis Birthday, Haley Birthday, Alex Birthday
+3577158679	Score=9	Weather=[lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Lewis Birthday, Haley Birthday, Alex Birthday
+3622907974	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Haley Birthday, Alex Birthday
+3634179674	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Haley Birthday, Alex Birthday
+3679479137	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Lewis Birthday, Haley Birthday
+3704122354	Score=9	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Pierre Birthday, Lewis Birthday, Haley Birthday, Alex Birthday
+3746228874	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Pierre Birthday, Lewis Birthday, Alex Birthday
+2056915845	Score=10	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Pierre Birthday, Lewis Birthday, Haley Birthday, Alex Birthday
+2081050644	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Lewis Birthday, Haley Birthday, Alex Birthday
+2082932575	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Lewis Birthday, Haley Birthday, Alex Birthday
+2119086922	Score=9	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Lewis Birthday, Haley Birthday, Alex Birthday
+2284646715	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Pierre Birthday, Lewis Birthday, Haley Birthday
+2332448420	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Pierre Birthday, Haley Birthday, Alex Birthday
+2392329070	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Lewis Birthday, Alex Birthday
+2427503787	Score=10	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Pierre Birthday, Lewis Birthday, Haley Birthday, Alex Birthday
+2504665086	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Pierre Birthday, Lewis Birthday, Alex Birthday
+++++++++++++below this line, new standard - Haley Bday & Pierre Bday included in hard requirements
+3000265005	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+3005244265	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3009973452	Score=8	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3010155895	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+3034565279	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Rabbit's Foot, Caviar
+3044153791	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3052506453	Score=7	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot
+3055424068	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Caviar
+3059365096	Score=7	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Coffee Bean, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3060129501	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Lewis Birthday, Alex Birthday, Rabbit's Foot
+3063893162	Score=7	Weather=[lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3070817960	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Caviar
+3071920542	Score=7	Weather=[lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Lewis Birthday, Caviar
+3073409690	Score=7	Weather=[lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Rabbit's Foot, Caviar
+3084882143	Score=7	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3090456206	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Lewis Birthday
+3094780041	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3095744157	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday
+3101748406	Score=7	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3110042449	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot
+3112254142	Score=8	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Lewis Birthday, Alex Birthday, Caviar
+3120567552	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot
+3122324874	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Rabbit's Foot, Caviar
+3123890867	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Rabbit's Foot, Caviar
+3124628332	Score=7	Weather=[early2ndRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3137903411	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Rabbit's Foot, Caviar
+3151541011	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Lewis Birthday, Caviar
+3164372106	Score=10	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3177508258	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Rabbit's Foot, Caviar
+3192097735	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3192936026	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Caviar
+3201314019	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot
+3211602975	Score=8	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3213967268	Score=7	Weather=[lateSpringRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot
+3233275074	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3236978861	Score=7	Weather=[earlyGreenRain]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3252641762	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3263066963	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Rabbit's Foot, Caviar
+3271077974	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Lewis Birthday, Caviar
+3301903938	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Rabbit's Foot, Caviar
+3313113819	Score=7	Weather=[lateSpringRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3321747881	Score=7	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Lewis Birthday, Alex Birthday
+3389997526	Score=7	Weather=[lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Rabbit's Foot, Caviar
+3391654610	Score=7	Weather=[early2ndRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot
+3430034417	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3432834105	Score=7	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3437125872	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Rabbit's Foot, Caviar
+3453704342	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+3458746096	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Lewis Birthday, Rabbit's Foot, Caviar
+3471396127	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3482946626	Score=7	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3483387920	Score=9	Weather=[lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3519608989	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+3519469381	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot
+3549764598	Score=8	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3560550722	Score=8	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3567551773	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3573822353	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Rabbit's Foot, Caviar
+3576226837	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3583149534	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Rabbit's Foot
+3589979231	Score=8	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3602428373	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3606680985	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Caviar
+3623215614	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Rabbit's Foot, Caviar
+3624866363	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3634653405	Score=8	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3638139708	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+3657463941	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3657558132	Score=7	Weather=[lateSpringRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3661189871	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Rabbit's Foot, Caviar
+3665965321	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3671716439	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Lewis Birthday, Alex Birthday, Caviar
+3675975368	Score=7	Weather=[early2ndRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3678975837	Score=8	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+3698006812	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Rabbit's Foot, Caviar
+3704122354	Score=8	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot
+3706301555	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Alex Birthday, Rabbit's Foot
+3707622562	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Alex Birthday
+3715672333	Score=8	Weather=[lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3722638349	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot
+3741744022	Score=7	Weather=[lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot
+3767626301	Score=7	Weather=[early2ndRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Lewis Birthday, Alex Birthday, Caviar
+3788081007	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3791986009	Score=7	Weather=[early2ndRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3798754712	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3824403859	Score=8	Weather=[lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3827931202	Score=7	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3850140462	Score=10	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3861989822	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Rabbit's Foot, Caviar
+3868367413	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Rabbit's Foot, Caviar
+3873160141	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3876229835	Score=8	Weather=[lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3883078056	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3884656521	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3895063995	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3909028567	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3916599852	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Lewis Birthday, Rabbit's Foot, Caviar
+3918670576	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3919178304	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Caviar
+3928441884	Score=7	Weather=[early2ndRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3929795542	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Caviar
+3943880005	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Rabbit's Foot
+3949688111	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Lewis Birthday, Alex Birthday
+3955904335	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+3959053406	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Caviar
+3968817402	Score=7	Weather=[lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Rabbit's Foot, Caviar
+3971082636	Score=7	Weather=[early2ndRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Alex Birthday, Caviar
+3978367661	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+3980711835	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot
+3985951817	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Lewis Birthday, Alex Birthday
+4004883084	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Rabbit's Foot, Caviar
+4014328094	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Caviar
+4016666866	Score=7	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Coffee Bean, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4026718297	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Alex Birthday, Caviar
+4030042461	Score=7	Weather=[lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4040005648	Score=7	Weather=[lateSpringRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4045171494	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+4047435786	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4050841861	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4065200358	Score=7	Weather=[earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4078440490	Score=7	Weather=[lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Vincent Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4094555103	Score=7	Weather=[lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Caviar
+4101049655	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Rabbit's Foot, Caviar
+4117747077	Score=7	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Vincent Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4127851580	Score=9	Weather=[lateSpringRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4133829302	Score=9	Weather=[lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4141753277	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4142017923	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Vincent Birthday, Lewis Birthday, Caviar
+4177142398	Score=9	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4179339469	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday
+4185070944	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot
+4194667046	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4199093679	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Rabbit's Foot, Caviar
+4219226999	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday
+4219592750	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Rabbit's Foot, Caviar
+4248439130	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Lewis Birthday, Caviar
+4257802361	Score=7	Weather=[early2ndRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Lewis Birthday, Alex Birthday
+4258125973	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot
+4260230197	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot
+4274584982	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+4279327914	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Alex Birthday, Caviar
+4291451862	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4296845101	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4296368423	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Lewis Birthday, Alex Birthday, Caviar
+4300423483	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Caviar
+4325572563	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4328402870	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Lewis Birthday, Alex Birthday, Rabbit's Foot
+4334735116	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot
+4338068769	Score=8	Weather=[earlyGreenRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4344240985	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Rabbit's Foot, Caviar
+4352226625	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4373275757	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Rabbit's Foot
+4389028276	Score=7	Weather=[lateSpringRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4398808753	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4398091996	Score=8	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4415332219	Score=7	Weather=[lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot
+4430260687	Score=7	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4443642935	Score=7	Weather=[lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4447740001	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4450795789	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot
+4455075572	Score=7	Weather=[lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4456272247	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4462886280	Score=7	Weather=[summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4464285666	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Lewis Birthday, Rabbit's Foot, Caviar
+4467053687	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4469596560	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Rabbit's Foot, Caviar
+4473236973	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+4495505077	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Caviar
+4503479378	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Alex Birthday, Rabbit's Foot, Caviar
+4505264806	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+4507128705	Score=7	Weather=[lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4507371681	Score=8	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+4520416069	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Alex Birthday, Rabbit's Foot, Caviar
+4531478533	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4536224090	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Caviar
+4540792031	Score=7	Weather=[lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Alex Birthday, Caviar
+4542062351	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4543899982	Score=7	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4545626573	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Alex Birthday, Rabbit's Foot
+4557552384	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Alex Birthday, Rabbit's Foot, Caviar
+4584900372	Score=8	Weather=[early2ndRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+4597378935	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Alex Birthday, Caviar
+4605643291	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+4608145716	Score=8	Weather=[early2ndRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Alex Birthday, Caviar
+4628906298	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+4632459890	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Rabbit's Foot
+4634857684	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Rabbit's Foot, Caviar
+4641507489	Score=7	Weather=[lateSpringRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+4652541004	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4658366911	Score=8	Weather=[early2ndRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4677942780	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Rabbit's Foot, Caviar
+4688525591	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Rabbit's Foot, Caviar
+4706241273	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Caviar
+4734058240	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Rabbit's Foot, Caviar
+4734716386	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4760585991	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot
+4770431503	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot
+4777354567	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Caviar
+4781794139	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4792488472	Score=7	Weather=[lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot
+4797784499	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4802055688	Score=8	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Alex Birthday, Caviar
+4824077314	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Alex Birthday, Rabbit's Foot, Caviar
+4853173878	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4857610151	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4862412739	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot
+4886330967	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4897115324	Score=7	Weather=[lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4900668331	Score=7	Weather=[early2ndRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot
+4921712310	Score=9	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+4923075088	Score=7	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Coffee Bean, Vincent Birthday, Lewis Birthday, Alex Birthday, Caviar
+4965997181	Score=7	Weather=[lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Rabbit's Foot, Caviar
+4974333004	Score=7	Weather=[lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Alex Birthday, Caviar
+4991248636	Score=7	Weather=[lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot
+5007801251	Score=7	Weather=[lateSpringRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5010060715	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Alex Birthday, Caviar
+5014164352	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5019235605	Score=7	Weather=[lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5019681805	Score=7	Weather=[lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+5023561685	Score=7	Weather=[early2ndRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5044694759	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Rabbit's Foot, Caviar
+5049822708	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5078136032	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Caviar
+5083037529	Score=7	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5100427208	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5102525520	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+5102376583	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+5107755747	Score=7	Weather=[lateSpringRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+5111848408	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+5115552537	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5116087198	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Rabbit's Foot, Caviar
+5121246338	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Rabbit's Foot, Caviar
+5132182435	Score=7	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Lewis Birthday, Caviar
+5151203691	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot
+5151467292	Score=7	Weather=[lateSpringRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5160376615	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Caviar
+5161434722	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+5169587938	Score=7	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5176254738	Score=7	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5191977913	Score=7	Weather=[early2ndRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Caviar
+5192721838	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Rabbit's Foot, Caviar
+5212386953	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Lewis Birthday, Rabbit's Foot, Caviar
+5223926813	Score=8	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5224621079	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Caviar
+5229795005	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5242936555	Score=7	Weather=[lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5249448770	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Rabbit's Foot
+5271935988	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Rabbit's Foot
+5274875889	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Alex Birthday, Rabbit's Foot
+5278259699	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5284052112	Score=7	Weather=[lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Alex Birthday
+5285218776	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Rabbit's Foot, Caviar
+5297249657	Score=7	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+5341264937	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot
+5358717309	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Rabbit's Foot, Caviar
+5364173418	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Caviar
+5372851034	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Caviar
+5377224960	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5377720338	Score=7	Weather=[early2ndRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5394096977	Score=7	Weather=[early2ndRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Rabbit's Foot, Caviar
+5399192316	Score=8	Weather=[lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Rabbit's Foot, Caviar
+5412580377	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5414556060	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Rabbit's Foot, Caviar
+5417054949	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+5426580774	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot
+5431284624	Score=7	Weather=[early2ndRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5453335565	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Rabbit's Foot, Caviar
+5463466953	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+5480895413	Score=7	Weather=[lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5494435756	Score=7	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5497819386	Score=8	Weather=[lateSpringRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot
+5508263918	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Alex Birthday
+5512652086	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+5517666119	Score=7	Weather=[earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5519923016	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5520572766	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5526014664	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot
+5529296267	Score=7	Weather=[lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5540626303	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Caviar
+5548668551	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Lewis Birthday, Alex Birthday, Caviar
+5549754810	Score=7	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5550121440	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Rabbit's Foot, Caviar
+5564176312	Score=7	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot
+5581560992	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5610655213	Score=8	Weather=[lateSpringRain]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5612924055	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Lewis Birthday, Alex Birthday, Caviar
+5617981180	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Lewis Birthday, Rabbit's Foot, Caviar
+5618304933	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot
+5624232362	Score=7	Weather=[earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5626727091	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Rabbit's Foot, Caviar
+5634846638	Score=7	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5635936295	Score=7	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Vincent Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5655823080	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Lewis Birthday, Alex Birthday, Caviar
+5656306375	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+5669829477	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Rabbit's Foot, Caviar
+5678665023	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Rabbit's Foot, Caviar
+5686094293	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot
+5700665237	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Lewis Birthday, Alex Birthday, Caviar
+5707570620	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5709135241	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5710373365	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Jas Birthday, Lewis Birthday, Caviar
+5716703681	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot
+5720532143	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Vincent Birthday, Rabbit's Foot, Caviar
+5727110566	Score=7	Weather=[lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+5740433584	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Caviar
+5763999637	Score=7	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot
+5768676956	Score=7	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+5771252487	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Alex Birthday, Rabbit's Foot, Caviar
+5772533236	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Caviar
+5774492592	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Rabbit's Foot, Caviar
+5774165434	Score=7	Weather=[early2ndRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5779514965	Score=7	Weather=[lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5789159168	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+5792414024	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Lewis Birthday, Rabbit's Foot
+5801081118	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Lewis Birthday, Alex Birthday, Caviar
+5805878517	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5807303977	Score=7	Weather=[lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Rabbit's Foot, Caviar
+5827320629	Score=7	Weather=[lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Caviar
+5834002792	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Vincent Birthday, Lewis Birthday, Alex Birthday, Caviar
+5860995347	Score=7	Weather=[early2ndRain, lateSpringRain]	OptionalCartMask=Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5867290678	Score=7	Weather=[early2ndRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Rabbit's Foot, Caviar
+5877813324	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Rabbit's Foot
+5901538435	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5918622319	Score=7	Weather=[early2ndRain, earlyGreenRain]	OptionalCartMask=Coffee Bean, Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot
+5922465227	Score=8	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5943888334	Score=7	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Caviar
+5965405317	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Lewis Birthday, Rabbit's Foot, Caviar
+5968550559	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Alex Birthday, Rabbit's Foot, Caviar
+5977765101	Score=8	Weather=[lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5982799580	Score=7	Weather=[early2ndRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Coffee Bean, Vincent Birthday, Rabbit's Foot, Caviar
+5991086707	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Lewis Birthday, Alex Birthday, Rabbit's Foot, Caviar
+5993398198	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Rabbit's Foot, Caviar
+5999913124	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	OptionalCartMask=Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar

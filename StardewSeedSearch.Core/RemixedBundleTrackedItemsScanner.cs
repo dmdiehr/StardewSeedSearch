@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Text.Json;
 
 namespace StardewSeedSearch.Core;
@@ -50,12 +45,7 @@ public static class RemixedBundleTrackedItemsScanner
     /// Scan the seed. Writes found tracked item IDs into outputBuffer (deduped).
     /// Returns false only if outputBuffer was too small.
     /// </summary>
-    public static bool TryScan(
-        ulong uniqueIdForThisGame,
-        Span<int> outputBuffer,
-        out int foundCount,
-        out bool disqualified,
-        out string? disqualifyReason)
+    public static bool TryScan(ulong uniqueIdForThisGame, Span<int> outputBuffer, out int foundCount, out bool disqualified, out string? disqualifyReason)
     {
         foundCount = 0;
         disqualified = false;

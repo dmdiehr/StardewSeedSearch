@@ -64,7 +64,6 @@ public static IReadOnlyList<Weather> GetWeatherForYear(int year, ulong gameId)
 }
 
 
-
 private static Weather GetGeneratedWeather(int year, Season season, int dayOfMonth, ulong gameId)
 {
     // We intentionally DO NOT implement any GameStateQuery RANDOM-based outcomes here:
