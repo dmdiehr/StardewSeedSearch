@@ -489,18 +489,9 @@ public static class SeedSearchPipeline
         // These option arrays are allocated once, at type init.
         private static readonly int[] GarlicOrSeeds = new[] { 248, 476 };
         private static readonly int[] CabbageOrSeeds = new[] { 266, 485 };
-        private static readonly int[] HaleyBday =
-        {
-            /* Coconut */ 88,
-            /* Sunflower */ 421
-        };
-
-        private static readonly int[] PierreBday = { /* Fried_Calamari */ 202 };
 
         public static readonly Demand[] AlwaysHardDemands =
         {
-            new Demand(14, 1, HaleyBday),
-            new Demand(28, 1, PierreBday),
             new Demand(84, 1, GarlicOrSeeds),
             new Demand(84, 1, CabbageOrSeeds)
         };

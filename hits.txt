@@ -11,3 +11,111 @@
 5010060715	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Coffee Bean, Jas Birthday, Lewis Birthday, Alex Birthday, Caviar
 5548668551	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Vincent Birthday, Jas Birthday, Lewis Birthday, Alex Birthday, Caviar
 5901538435	Score=9	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Coffee Bean, Vincent Birthday, Jas Birthday, Alex Birthday, Rabbit's Foot, Caviar
+12500225921	Score=6	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Alex Birthday, Pierre Birthday
+12500884122	Score=5	Weather=[lateSpringRain]	Cart=Jas Birthday, Lewis Birthday, Pierre Birthday, Coffee Bean
+12500738338	Score=6	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Vincent Birthday, Jas Birthday, Alex Birthday
+12500573461	Score=5	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Jas Birthday, Alex Birthday
+12500373464	Score=7	Weather=[early2ndRain, lateSpringRain]	Cart=Alex Birthday, Haley Birthday, Pierre Birthday, Coffee Bean, Lot's of Coffee
+12500190036	Score=5	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	Cart=Alex Birthday, Haley Birthday
+12501632632	Score=5	Weather=[early2ndRain, lateSpringRain]	Cart=Lewis Birthday, Alex Birthday, Pierre Birthday
+12501725210	Score=5	Weather=[early2ndRain, lateSpringRain]	Cart=Alex Birthday, Pierre Birthday, Coffee Bean
+12502204777	Score=5	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Alex Birthday, Pierre Birthday
+12502438522	Score=6	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Vincent Birthday, Jas Birthday
+12502080562	Score=6	Weather=[lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Vincent Birthday, Jas Birthday, Coffee Bean
+12502495787	Score=5	Weather=[lateSpringRain]	Cart=Jas Birthday, Lewis Birthday, Pierre Birthday, Coffee Bean
+12502521484	Score=5	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	Cart=Alex Birthday, Coffee Bean
+12503424281	Score=6	Weather=[early2ndRain, earlyGreenRain, summerRain>=5]	Cart=Pierre Birthday, Coffee Bean, Lot's of Coffee
+12503829511	Score=5	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Jas Birthday, Alex Birthday
+12503644825	Score=6	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Jas Birthday, Lewis Birthday, Haley Birthday
+12503276148	Score=5	Weather=[lateSpringRain, summerRain>=5]	Cart=Lewis Birthday, Alex Birthday, Coffee Bean
+12503751069	Score=6	Weather=[lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Jas Birthday, Alex Birthday, Pierre Birthday
+12503173309	Score=5	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Pierre Birthday, Coffee Bean
+12504837513	Score=5	Weather=[lateSpringRain, summerRain>=5]	Cart=Jas Birthday, Alex Birthday, Coffee Bean
+12504090813	Score=6	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Jas Birthday, Alex Birthday, Coffee Bean
+12504695003	Score=5	Weather=[lateSpringRain, summerRain>=5]	Cart=Jas Birthday, Lewis Birthday, Alex Birthday
+12504343114	Score=5	Weather=[early2ndRain]	Cart=Jas Birthday, Lewis Birthday, Haley Birthday, Coffee Bean
+12504565393	Score=5	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	Cart=Jas Birthday, Alex Birthday
+12504785086	Score=5	Weather=[lateSpringRain, summerRain>=5]	Cart=Jas Birthday, Lewis Birthday, Alex Birthday
+12504785417	Score=5	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Lewis Birthday, Coffee Bean
+12505416772	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Vincent Birthday, Alex Birthday, Haley Birthday, Coffee Bean
+12505236288	Score=5	Weather=[early2ndRain, earlyGreenRain]	Cart=Jas Birthday, Lewis Birthday, Alex Birthday
+12505839981	Score=6	Weather=[lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Vincent Birthday, Alex Birthday, Pierre Birthday
+12505041516	Score=6	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Vincent Birthday, Coffee Bean
+12505706937	Score=5	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Lewis Birthday
+12505922576	Score=6	Weather=[lateSpringRain, summerRain>=5]	Cart=Lewis Birthday, Alex Birthday, Haley Birthday, Coffee Bean
+12505529837	Score=5	Weather=[early2ndRain, lateSpringRain]	Cart=Pierre Birthday, Coffee Bean, Lot's of Coffee
+12505930435	Score=6	Weather=[lateSpringRain, earlyGreenRain]	Cart=Vincent Birthday, Jas Birthday, Lewis Birthday, Coffee Bean
+12505164029	Score=6	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Vincent Birthday, Alex Birthday, Pierre Birthday
+12505180128	Score=5	Weather=[early2ndRain, lateSpringRain]	Cart=Jas Birthday, Alex Birthday, Coffee Bean
+12505388811	Score=6	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Vincent Birthday, Lewis Birthday
+12506203602	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Jas Birthday, Lewis Birthday, Alex Birthday, Pierre Birthday
+12506819856	Score=7	Weather=[early2ndRain, lateSpringRain]	Cart=Jas Birthday, Lewis Birthday, Alex Birthday, Haley Birthday, Coffee Bean
+12506834964	Score=5	Weather=[early2ndRain, summerRain>=5]	Cart=Lewis Birthday, Alex Birthday, Haley Birthday
+12506280335	Score=5	Weather=[early2ndRain, lateSpringRain]	Cart=Jas Birthday, Alex Birthday, Coffee Bean
+12506280878	Score=5	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Alex Birthday
+12506693555	Score=5	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Jas Birthday, Lewis Birthday
+12506901352	Score=6	Weather=[lateSpringRain, summerRain>=5]	Cart=Vincent Birthday, Jas Birthday, Alex Birthday, Coffee Bean
+12506104532	Score=5	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Vincent Birthday, Alex Birthday
+12506534440	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Lewis Birthday, Haley Birthday, Pierre Birthday, Coffee Bean
+12506963717	Score=5	Weather=[early2ndRain, earlyGreenRain]	Cart=Alex Birthday, Haley Birthday, Coffee Bean
+12507903524	Score=5	Weather=[early2ndRain, lateSpringRain]	Cart=Vincent Birthday, Jas Birthday, Lewis Birthday
+12507141118	Score=6	Weather=[early2ndRain, earlyGreenRain, summerRain>=5]	Cart=Alex Birthday, Coffee Bean, Lot's of Coffee
+12507783450	Score=5	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	Cart=Vincent Birthday, Pierre Birthday
+12508605164	Score=6	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Jas Birthday, Alex Birthday, Pierre Birthday
+12508806150	Score=5	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Alex Birthday, Coffee Bean
+12508207710	Score=6	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	Cart=Alex Birthday, Coffee Bean, Lot's of Coffee
+12508828079	Score=6	Weather=[lateSpringRain, summerRain>=5]	Cart=Jas Birthday, Lewis Birthday, Alex Birthday, Pierre Birthday
+12508043874	Score=5	Weather=[lateSpringRain, earlyGreenRain]	Cart=Vincent Birthday, Jas Birthday, Coffee Bean
+12508920747	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Lewis Birthday, Alex Birthday, Pierre Birthday
+12508321735	Score=5	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	Cart=Jas Birthday, Alex Birthday
+12508341731	Score=5	Weather=[early2ndRain, earlyGreenRain]	Cart=Vincent Birthday, Jas Birthday, Lewis Birthday
+12508941416	Score=5	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	Cart=Jas Birthday, Coffee Bean
+12508351800	Score=6	Weather=[early2ndRain, lateSpringRain]	Cart=Jas Birthday, Alex Birthday, Haley Birthday, Coffee Bean
+12508965353	Score=5	Weather=[early2ndRain]	Cart=Jas Birthday, Alex Birthday, Coffee Bean, Lot's of Coffee
+12508568825	Score=6	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Alex Birthday, Coffee Bean, Lot's of Coffee
+12508582938	Score=5	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	Cart=Jas Birthday, Lewis Birthday
+12509014475	Score=6	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Jas Birthday, Alex Birthday
+12509268900	Score=5	Weather=[early2ndRain, earlyGreenRain, summerRain>=5]	Cart=Jas Birthday, Alex Birthday
+12509112892	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Jas Birthday, Pierre Birthday, Coffee Bean
+12509720085	Score=5	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Jas Birthday, Lewis Birthday
+12509580533	Score=5	Weather=[early2ndRain, lateSpringRain]	Cart=Alex Birthday, Haley Birthday, Pierre Birthday
+12509394828	Score=5	Weather=[lateSpringRain, earlyGreenRain]	Cart=Vincent Birthday, Jas Birthday, Coffee Bean
+12510020045	Score=5	Weather=[lateSpringRain, earlyGreenRain]	Cart=Jas Birthday, Lewis Birthday, Haley Birthday
+12510267022	Score=8	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Jas Birthday, Lewis Birthday, Alex Birthday, Haley Birthday
+12510680107	Score=5	Weather=[lateSpringRain, earlyGreenRain]	Cart=Lewis Birthday, Alex Birthday, Pierre Birthday
+12510085071	Score=6	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Jas Birthday, Lewis Birthday, Alex Birthday
+12510486703	Score=5	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Coffee Bean
+12510289775	Score=6	Weather=[early2ndRain, earlyGreenRain, summerRain>=5]	Cart=Jas Birthday, Lewis Birthday, Alex Birthday
+12510107721	Score=6	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Jas Birthday, Pierre Birthday
+12510313410	Score=5	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Jas Birthday, Alex Birthday
+12510151385	Score=6	Weather=[lateSpringRain, earlyGreenRain]	Cart=Jas Birthday, Lewis Birthday, Pierre Birthday, Coffee Bean
+12510958589	Score=5	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Lewis Birthday, Pierre Birthday
+12510174679	Score=5	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Vincent Birthday, Alex Birthday
+12510986365	Score=6	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Jas Birthday, Lewis Birthday, Alex Birthday
+12511670330	Score=5	Weather=[lateSpringRain, earlyGreenRain]	Cart=Jas Birthday, Alex Birthday, Pierre Birthday
+12511333900	Score=5	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Jas Birthday, Lewis Birthday
+12511353430	Score=5	Weather=[early2ndRain, earlyGreenRain]	Cart=Lewis Birthday, Haley Birthday, Coffee Bean
+12511953398	Score=6	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	Cart=Jas Birthday, Lewis Birthday, Coffee Bean
+12511562625	Score=5	Weather=[early2ndRain, lateSpringRain]	Cart=Jas Birthday, Lewis Birthday, Alex Birthday
+12512231725	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain, summerRain>=5]	Cart=Lewis Birthday, Alex Birthday, Pierre Birthday
+12512037595	Score=7	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Vincent Birthday, Lewis Birthday, Alex Birthday, Coffee Bean
+12512455671	Score=5	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Vincent Birthday, Alex Birthday
+12512856742	Score=5	Weather=[early2ndRain, lateSpringRain]	Cart=Vincent Birthday, Lewis Birthday, Alex Birthday
+12512885641	Score=5	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Vincent Birthday, Haley Birthday
+12512098691	Score=6	Weather=[early2ndRain, lateSpringRain]	Cart=Vincent Birthday, Jas Birthday, Haley Birthday, Coffee Bean
+12512972312	Score=5	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Jas Birthday, Alex Birthday
+12512592211	Score=5	Weather=[lateSpringRain, summerRain>=5]	Cart=Jas Birthday, Lewis Birthday, Coffee Bean
+12513457744	Score=5	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	Cart=Vincent Birthday, Lewis Birthday
+12513859092	Score=8	Weather=[early2ndRain, lateSpringRain]	Cart=Jas Birthday, Lewis Birthday, Alex Birthday, Haley Birthday, Coffee Bean, Lot's of Coffee
+12513065692	Score=5	Weather=[early2ndRain, lateSpringRain]	Cart=Jas Birthday, Lewis Birthday, Pierre Birthday
+12513478996	Score=5	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Vincent Birthday, Alex Birthday
+12513293466	Score=5	Weather=[lateSpringRain, summerRain>=5]	Cart=Vincent Birthday, Lewis Birthday, Pierre Birthday
+12513534046	Score=6	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Jas Birthday, Lewis Birthday, Haley Birthday
+12514215808	Score=5	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Jas Birthday, Alex Birthday
+12514033046	Score=5	Weather=[lateSpringRain, earlyGreenRain]	Cart=Jas Birthday, Alex Birthday, Coffee Bean
+12514662067	Score=5	Weather=[early2ndRain, lateSpringRain]	Cart=Jas Birthday, Alex Birthday, Pierre Birthday
+12514476139	Score=5	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	Cart=Alex Birthday, Haley Birthday
+12514685718	Score=6	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	Cart=Vincent Birthday, Jas Birthday, Alex Birthday
+12514700732	Score=5	Weather=[early2ndRain, lateSpringRain, summerRain>=5]	Cart=Alex Birthday, Haley Birthday
+12514155508	Score=5	Weather=[early2ndRain, lateSpringRain]	Cart=Lewis Birthday, Haley Birthday, Pierre Birthday
+12515817126	Score=5	Weather=[early2ndRain, lateSpringRain, earlyGreenRain]	Cart=Vincent Birthday, Jas Birthday
