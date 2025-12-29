@@ -73,7 +73,6 @@ public static class OptionalCartBonusDefaults
             "Pierre Birthday",
             "Coffee Bean",
             "Lot's of Coffee"
-
         };
 
         var parts = new System.Collections.Generic.List<string>(names.Length);
